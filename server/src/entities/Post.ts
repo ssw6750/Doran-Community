@@ -1,10 +1,13 @@
 import { Exclude, Expose } from "class-transformer";
-import { BeforeInsert, Column, Index, JoinColumn, ManyToOne, OneToMany } from "typeorm";
+import { BeforeInsert, Column, Entity, Index, JoinColumn, ManyToOne, OneToMany } from "typeorm";
 import { makeId, slugify } from "../utils/helpers";
 import  BaseEntity from "./Entity";
 import Sub from "./Sub";
-import { User } from "./User";
+import  User  from "./User";
+import  Vote  from "./Vote";
+import Comment from "./Comment";
 
+@Entity("posts")
 export default class Post extends BaseEntity {
     @Index()
     @Column()
@@ -36,7 +39,7 @@ export default class Post extends BaseEntity {
 
     @Exclude()
     @OneToMany(()=>Comment, (comment) => comment.post)
-    comments: Comment;
+    comments: Comment[];
 
     @Exclude()
     @OneToMany(()=> Vote, (vote) => vote.post)
@@ -53,7 +56,7 @@ export default class Post extends BaseEntity {
     }
 
     @exports()
-    get coteScore(): number {
+    get voteScore(): number {
         return this.votes?.reduce((memo, curt)=> memo + (curt.value||0), 0);
     }
 
