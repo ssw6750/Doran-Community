@@ -10,7 +10,7 @@ interface inputGroupProps {
     setValue: (str: string) => void;
 }
 
-const inputGroup: React.FC<inputGroupProps> = ({
+const InputGroup: React.FC<inputGroupProps> = ({
     className = "mb-2",
     type = "text",
     placeholder = "",
@@ -35,4 +35,4 @@ const inputGroup: React.FC<inputGroupProps> = ({
   )
 }
 
-export default inputGroup
+export default InputGroup

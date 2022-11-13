@@ -55,7 +55,7 @@ export default class Post extends BaseEntity {
         return this.comments?.length;
     }
 
-    @exports()
+    @Expose()
     get voteScore(): number {
         return this.votes?.reduce((memo, curt)=> memo + (curt.value||0), 0);
     }
@@ -70,7 +70,6 @@ export default class Post extends BaseEntity {
     @BeforeInsert()
     makeIdAndSlug() {
         this.identifier = makeId(7);
-        this.slug = slugify(this.title)
+        this.slug = slugify(this.title);
     }
-
 }
