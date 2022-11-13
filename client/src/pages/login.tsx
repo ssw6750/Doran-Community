@@ -3,6 +3,7 @@ import axios from 'axios';
 import Link from 'next/link'
 import { useRouter } from 'next/router';
 import InputGroup from '../components/InputGroup'
+import { useAuthDispatch } from '../context/auth';
 
 const Login = () => {
     let router = useRouter()
@@ -10,11 +11,18 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const [errors, setErrors] = useState<any>({});
 
+    const dispatch = useAuthDispatch();
+
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault()
 
         try{
             const res = await axios.post("/auth/login", {password, username}, {withCredentials: true})
+
+            dispatch("LOGIN", res.data?.user);
+
+            router.push("/")
+
         } catch (error: any) {
             console.log(error)
             setErrors(error.response.data || {})
@@ -22,7 +30,7 @@ const Login = () => {
     }
     return (
        <div className='bg-white'>
-          <div className='flex flex-col itmes-center justify-content h-screen p-6'>
+          <div className='flex flex-col itmes-center justify-center h-screen p-6'>
               <div className='w-10/12 mx-auto md:w-96'>
                   <h1 className='mb-2 text-lg font-medium'>로그인</h1>
                   <form onSubmit={handleSubmit}>
