@@ -5,6 +5,7 @@ import { isEmpty } from "class-validator";
 import { AppDataSource } from "../data-source";
 import Sub from "../entities/Sub";
 import User from "../entities/User";
+import Post from "../entities/Post";
 
 //next 타입???
 const createSub = async (req: Request, res: Response, next: NextFunction) => {
@@ -21,6 +22,8 @@ const createSub = async (req: Request, res: Response, next: NextFunction) => {
             .where("lower(sub.name) = :name", {name: name.toLowerCase()})
             .getOne();
 
+         console.log("AAAAAAA")
+
         if(sub) errors.name = "서브가 이미 존재합니다."
         if(Object.keys(errors).length > 0) {
             throw errors;
@@ -31,7 +34,7 @@ const createSub = async (req: Request, res: Response, next: NextFunction) => {
     }
 
     try {
-        const user: User = res.locals.users;
+        const user: User = res.locals.user;
 
         const sub = new Sub()
         sub.name = name;
@@ -47,10 +50,29 @@ const createSub = async (req: Request, res: Response, next: NextFunction) => {
     }
 };
 
-
+const topSubs = async (req: Request, res: Response) => {
+    try {
+        const imageUrlExp = `COALESCE(s."imageUrn", 'https://www.gravatar.com/avatar?d=mp&f=y')`;
+        console.log("AAAA")
+        const subs = await AppDataSource
+            .createQueryBuilder()
+            .select(`s.title, s.name, ${imageUrlExp} as "imageUrl", count(p.id) as "postCount"`)
+            .from(Sub, "s")
+            .leftJoin(Post, "p", `s.name = p."subName"`)
+            .groupBy('s.title, s.name, "imageUrl"')
+            .orderBy(`"postCount"`, "DESC")
+            .limit(5)
+            .execute();
+        return res.json(subs);
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({ error: "Something went wrong"})
+    }
+}
 
 const router = Router();
 
 router.post("/", userMiddleware, authMiddleware, createSub);
+router.get("/sub/topSubs", topSubs);
 
 export default router
