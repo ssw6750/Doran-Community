@@ -4,6 +4,8 @@ import User from "../entities/User";
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import cookie from 'cookie';
+import userMiddleware from '../middlewares/user'
+import authMiddleware from '../middlewares/auth'
 
 const mapErrors= (errors: Object[]) => {
     return errors.reduce((prev: any, err: any) => {
@@ -11,6 +13,10 @@ const mapErrors= (errors: Object[]) => {
         return prev;
     }, {})
 };
+
+const me = async(_: Request, res: Response)  => {
+    return res.json(res.locals.user);
+}
 
 const register = async(req: Request, res: Response) => {
     const { email, username, password } = req.body;
@@ -77,9 +83,9 @@ const login = async(req: Request, res: Response) => {
         const token = jwt.sign({username}, process.env.JWT_SECRET!);
 
         // 쿠키 저장
-        res.set("Set_Cookie", cookie.serialize("token", token, {
+        res.set("Set-Cookie", cookie.serialize("token", token, {
             httpOnly: true,
-            maxAge: 60* 60* 24 * 7,
+            maxAge: 60 * 60 * 24 * 7,
             path: "/"
         }));
 
@@ -91,6 +97,7 @@ const login = async(req: Request, res: Response) => {
 }
 
 const router = Router();
+router.get("/me", userMiddleware, authMiddleware, me);
 router.post("/register", register);
 router.post("/login", login);
 
