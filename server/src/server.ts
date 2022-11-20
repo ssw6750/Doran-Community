@@ -18,6 +18,8 @@ app.use(express.json());
 app.use(morgan('dev'));
 app.use(cookieParser());
 
+app.use(express.static("public"))
+
 dotenv.config();
 
 app.get("/", (_,res) => res.send("running"));
