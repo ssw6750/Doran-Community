@@ -18,7 +18,7 @@ export default class Comment extends BaseEntity {
     @Column()
     username: string;
 
-    @ManyToMany(()=> User)
+    @ManyToOne(()=> User)
     @JoinColumn({name:"username", referencedColumnName: "username"})
     user: User
 
@@ -34,7 +34,7 @@ export default class Comment extends BaseEntity {
 
     protected userVote: number;
 
-    setUser(user:User) {
+    setUserVote(user:User) {
         const index = this.votes?.findIndex(v=>v.username===user.username);
         this.userVote = index>-1 ? this.votes[index].value : 0;
     }
