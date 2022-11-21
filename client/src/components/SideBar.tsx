@@ -25,7 +25,7 @@ const SideBar = ({sub}: Props) => {
                     </div>
                 </div>
                 <p className='my-3'>
-                    {/* <i className='mr-2 fas fa-birthday-cake'></i> */}
+                    <i className='mr-2 fas fa-birthday-cake'></i>
                     {dayjs(sub?.createdAt).format('MM.DD.YYYY')}
                 </p>
                 {authenticated && (
