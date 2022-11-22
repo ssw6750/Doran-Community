@@ -47,7 +47,7 @@ export default class Post extends BaseEntity {
 
     @Expose()
     get url(): string {
-        return `r/${this.subName}/${this.identifier}/${this.slug}`
+        return `/r/${this.subName}/${this.identifier}/${this.slug}`
     }
 
     @Expose()
