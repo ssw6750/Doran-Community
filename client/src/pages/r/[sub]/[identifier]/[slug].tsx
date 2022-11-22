@@ -2,7 +2,7 @@ import axios from 'axios';
 import Link from 'next/link';
 import { useRouter } from 'next/router'
 import React, { FormEvent, useState } from 'react'
-import useSWR from 'swr';
+import useSWR, { mutate } from 'swr';
 import { comment, Post } from '../../../../types';
 import dayjs from 'dayjs'
 import { useAuthState } from '../../../../context/auth';
@@ -14,7 +14,7 @@ const PostPage = () => {
     const [newComment, setNewComment] = useState("")
     const {data: post, error} = useSWR<Post>(
         identifier && slug? `/posts/${identifier}/${slug}`: null);
-    const {data: comments} = useSWR<comment[]>(
+    const {data: comments, mutate} = useSWR<comment[]>(
       identifier && slug ? `/posts/${identifier}/${slug}/comments`:null
     )
 
@@ -30,6 +30,7 @@ const PostPage = () => {
         await axios.post(`/posts/${post?.identifier}/${post?.slug}/comments`, {
           body: newComment
         });
+        mutate(); // 캐시 갱신
         setNewComment("");
       } catch (error) {
         console.log(error)
