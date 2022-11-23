@@ -18,9 +18,7 @@ const vote = async (req:Request, res:Response) => {
         let post: Post | undefined = await Post.findOneByOrFail({identifier, slug})
         // let vote: Vote | undefined;
         let vote: Vote | null;
-        let comment: Comment | undefined;
-        console.log("AAAAAAAAAAAAAAAAAA");
-        
+        let comment: Comment | undefined;       
 
         if (commentIdentifier) {
             // 댓글 식별자가 있는 경우 댓글로 vote 찾기

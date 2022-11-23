@@ -52,8 +52,6 @@ const createSub = async (req: Request, res: Response, next: NextFunction) => {
             .where("lower(sub.name) = :name", {name: name.toLowerCase()})
             .getOne();
 
-         console.log("AAAAAAA")
-
         if(sub) errors.name = "서브가 이미 존재합니다."
         if(Object.keys(errors).length > 0) {
             throw errors;
@@ -83,7 +81,6 @@ const createSub = async (req: Request, res: Response, next: NextFunction) => {
 const topSubs = async (req: Request, res: Response) => {
     try {
         const imageUrlExp = `COALESCE('${process.env.APP_URL}/images/' || s."imageUrn", 'https://www.gravatar.com/avatar?d=mp&f=y')`;
-        console.log("AAAA")
         const subs = await AppDataSource
             .createQueryBuilder()
             .select(`s.title, s.name, ${imageUrlExp} as "imageUrl", count(p.id) as "postCount"`)
