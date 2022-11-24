@@ -12,7 +12,7 @@ import PostCard from '../components/PostCard'
 import { useEffect, useState } from 'react'
 
 const Home: NextPage = () => {
-  const {authenticated} = useAuthState();
+  const { authenticated } = useAuthState();
   const fetcher = async (url: string) => {
     return await axios.get(url).then(res => res.data)
   }
@@ -21,12 +21,12 @@ const Home: NextPage = () => {
   const getKey = (pageIndex: number, previousPageData: Post[]) => {
     if (previousPageData && !previousPageData.length) return null;
     return `/posts?page=${pageIndex}`
-  } 
+  }
 
   const { data, error, size: page, setSize: setPage, isValidating, mutate } = useSWRInfinite<Post[]>(getKey);
   const isInitalLoading = !data && !error;
-  const posts: Post[] = data? ([] as Post[]).concat(...data): [];
-  const {data: topSubs} = useSWR<Sub[]>(address, fetcher);
+  const posts: Post[] = data ? ([] as Post[]).concat(...data) : [];
+  const { data: topSubs } = useSWR<Sub[]>(address, fetcher);
 
   const [observedPost, setObservedPost] = useState("");
 
@@ -34,7 +34,7 @@ const Home: NextPage = () => {
     // 포스트가 없다면 return
     if (!posts || posts.length === 0) return;
     // posts 배열안에 마지막 post에 id를 가져옵니다.
-    const id = posts[posts.length-1].identifier;
+    const id = posts[posts.length - 1].identifier;
     if (id !== observedPost) {
       setObservedPost(id);
       observeElement(document.getElementById(id));
@@ -46,26 +46,26 @@ const Home: NextPage = () => {
     // 브라우저 뷰포트와 설정한 요소를의 교차점을 관찰
     const observer = new IntersectionObserver(
       (entries) => {
-        if(entries[0].isIntersecting === true) {
+        if (entries[0].isIntersecting === true) {
           console.log("마지막 포스트에 왔습니다.");
           setPage(page + 1);
           observer.unobserve(element)
         }
       },
-      {threshold: 1}
+      { threshold: 1 }
     );
     // 대상 요소의 관찰을 시작
     observer.observe(element);
 
   }
-  
+
 
   return (
     <div className="flex max-w-5xl px-4 pt-5 mx-auto">
       {/* 포스트리스트 */}
       <div className='w-full md:mr-3 md:w-8/12'>
         {isInitalLoading && <p className='text-lg text-center'>로딩중입니다...</p>}
-        {posts?.map(post=> (
+        {posts?.map(post => (
           <PostCard
             key={post.identifier}
             post={post}
@@ -84,9 +84,9 @@ const Home: NextPage = () => {
           {/* 커뮤니티 리스트 */}
           <div>
             {topSubs?.map((sub) => (
-              <div 
-              key={sub.name}
-              className='flex items-center px-4 py-2 text-xs border-b'
+              <div
+                key={sub.name}
+                className='flex items-center px-4 py-2 text-xs border-b'
               >
                 <Link href={`/r/${sub.name}`}>
                   <a>
@@ -108,7 +108,7 @@ const Home: NextPage = () => {
               </div>
             ))}
           </div>
-          
+
           {authenticated &&
             <div className='w-full py-6 text-center'>
               <Link href="/subs/create">
