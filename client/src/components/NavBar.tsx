@@ -28,9 +28,12 @@ const NavBar: React.FC = () => {
         return setOpen(!isOpen)
     }
 
-    const menuDropBox = useRef<HTMLElement>();
-    const handleClickOutside = (event: Event) => {    
-        if (isOpen === true && !menuDropBox.current?.contains(event.target as Node)) {
+    const menuDropBox = useRef<HTMLDivElement>(null);
+    const handleClickOutside = (event: Event) => {
+        console.log("AAAAA")
+        console.log(menuDropBox.current?.contains)    
+        if (!menuDropBox.current?.contains(event.target as Node)) {
+            console.log("AAA")
             return setOpen(false);
         }
     };
@@ -74,11 +77,11 @@ const NavBar: React.FC = () => {
             {/* md 사이즈 이하 일때 계정 아이콘 표시 */}
             {!loading &&
             <>
-                <div className='md:hidden relative' onClick={handleMenu}>
+                <div className='md:hidden relative' onClick={handleMenu} ref={menuDropBox}>
                     <i
                         className='text-gray-500 fas fa-user-circle fa-lg hover:cursor-pointer hover:text-blue-300' />
                     {isOpen &&
-                        (<div className='absolute border w-24 right-0 top-10 bg-white ' ref={menuDropBox}>
+                        (<div className='absolute border w-24 right-0 top-10 bg-white'>
                             <Link href="/login">
                                 <a className='w-full text-center text-sm block py-2 border hover:bg-blue-400 hover:text-white font-semibold'>
                                     로그인
