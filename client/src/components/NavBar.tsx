@@ -7,7 +7,7 @@ import { useAuthDispatch, useAuthState } from '../context/auth'
 
 const NavBar: React.FC = () => {
     const [isOpen, setOpen] = useState(false)
-    const { loading, authenticated } = useAuthState();
+    const { loading, authenticated, user } = useAuthState();
     const dispatch = useAuthDispatch();
 
     const handleLogout = () => {
@@ -51,9 +51,9 @@ const NavBar: React.FC = () => {
                     {/* Community */}
                     <a>
                         <Image
-                            src="/reddit-logo.png"
+                            src="/logo-design.PNG"
                             alt="logo"
-                            width={90}
+                            width={100}
                             height={30}
                         >
                         </Image>
@@ -76,27 +76,37 @@ const NavBar: React.FC = () => {
             {/* md 사이즈 이하 일때 계정 아이콘 표시 */}
             {!loading &&
             <>
-                <div className='md:hidden relative' onClick={handleMenu} ref={menuDropBox}>
+                <div className='md:hidden relative border hover:cursor-pointer text-gray-500 hover:text-blue-300' onClick={handleMenu} ref={menuDropBox}>
                     <i
-                        className='text-gray-500 fas fa-user-circle fa-lg hover:cursor-pointer hover:text-blue-300' />
-                    {isOpen &&
-                        (<div className='absolute border w-24 right-0 top-10 bg-white'>
+                        className='fas fa-user-circle fa-lg my-1 mr-4 ml-2 text-inherit' />
+                    <i
+                        className='fas fa-angle-double-down fa-sm mr-2 mb-1 text-inherit' />
+                    {isOpen && (authenticated ? 
+                        (<div className='absolute border w-36 right-0 top-10 bg-white rounded'>
+                                <a 
+                                    className='w-full text-center text-sm block py-2 hover:bg-blue-400 hover:text-white font-semibold text-gray-600'
+                                    onClick={handleLogout}>
+                                    로그아웃
+                                </a>
+                            <Link href={`/u/${user?.username}`}>
+                                <a className='w-full text-center text-sm block py-2 hover:bg-blue-400 hover:text-white font-semibold text-gray-600'>
+                                    마이페이지
+                                </a>
+                            </Link>
+                        </div>) 
+                        : (<div className='absolute border w-36 right-0 top-10 bg-white rounded'>
                             <Link href="/login">
-                                <a className='w-full text-center text-sm block py-2 border hover:bg-blue-400 hover:text-white font-semibold'>
+                                <a className='w-full text-center text-sm block py-2 hover:bg-blue-400 hover:text-white font-semibold text-gray-600'>
                                     로그인
                                 </a>
                             </Link>
-                            <Link href="/login">
-                                <a className='w-full text-center text-sm block py-2 border hover:bg-blue-400 hover:text-white font-semibold'>
-                                    로그인
+                            <Link href="/register">
+                                <a className='w-full text-center text-sm block py-2 hover:bg-blue-400 hover:text-white font-semibold text-gray-600'>
+                                    회원가입
                                 </a>
                             </Link>
-                            <Link href="/login">
-                                <a className='w-full text-center text-sm block py-2 border hover:bg-blue-400 hover:text-white font-semibold'>
-                                    로그인
-                                </a>
-                            </Link>
-                        </div>)}
+                        </div>))
+                        }
                 </div>
             </>
             }
