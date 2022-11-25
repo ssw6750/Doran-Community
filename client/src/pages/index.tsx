@@ -77,8 +77,15 @@ const Home: NextPage = () => {
       {/* 사이드바 */}
       <div className='hidden w-4/12 ml-3 md:block'>
         <div className='bg-white border rounded'>
-          <div className='p-4 border-b'>
-            <p className='text-lg font-semibold text-center'>상위 커뮤니티</p>
+          <div className='p-4 border-b rounded-t'       
+            style={{
+              backgroundImage: `linear-gradient(rgba(135, 80, 156, 0.9), rgba(135, 80, 156, 0.9)), url(/tree-2249363_1920.jpg)`,
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }}
+            >
+            <p className='text-lg font-semibold text-center text-white'>커뮤니티 랭킹</p>
           </div>
 
           {/* 커뮤니티 리스트 */}

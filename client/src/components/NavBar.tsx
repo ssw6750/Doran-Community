@@ -49,12 +49,12 @@ const NavBar: React.FC = () => {
             <div className='text-2xl font-semibold text-gray-400'>
                 <Link href="/">
                     {/* Community */}
-                    <a>
+                    <a className='flex'>
                         <Image
-                            src="/logo-design.PNG"
+                            src="/11.png"
                             alt="logo"
-                            width={100}
-                            height={30}
+                            width={90}
+                            height={30}     
                         >
                         </Image>
                     </a>
@@ -76,32 +76,32 @@ const NavBar: React.FC = () => {
             {/* md 사이즈 이하 일때 계정 아이콘 표시 */}
             {!loading &&
             <>
-                <div className='md:hidden relative border hover:cursor-pointer text-gray-500 hover:text-blue-300' onClick={handleMenu} ref={menuDropBox}>
+                <div className='md:hidden relative border hover:cursor-pointer text-gray-500 hover:text-fuchsia-700 min-w-fit' onClick={handleMenu} ref={menuDropBox}>
                     <i
-                        className='fas fa-user-circle fa-lg my-1 mr-4 ml-2 text-inherit' />
+                        className='fas fa-user-circle fa-lg my-1 mx-2 text-inherit' />
                     <i
-                        className='fas fa-angle-double-down fa-sm mr-2 mb-1 text-inherit' />
+                        className='fas fa-angle-double-down fa-sm mx-2 mb-1 text-inherit' />
                     {isOpen && (authenticated ? 
                         (<div className='absolute border w-36 right-0 top-10 bg-white rounded'>
                                 <a 
-                                    className='w-full text-center text-sm block py-2 hover:bg-blue-400 hover:text-white font-semibold text-gray-600'
+                                className='w-full text-center text-sm block py-2 hover:bg-fuchsia-700 hover:text-white font-semibold text-gray-600'
                                     onClick={handleLogout}>
                                     로그아웃
                                 </a>
                             <Link href={`/u/${user?.username}`}>
-                                <a className='w-full text-center text-sm block py-2 hover:bg-blue-400 hover:text-white font-semibold text-gray-600'>
+                                <a className='w-full text-center text-sm block py-2 hover:bg-fuchsia-700 hover:text-white font-semibold text-gray-600'>
                                     마이페이지
                                 </a>
                             </Link>
                         </div>) 
                         : (<div className='absolute border w-36 right-0 top-10 bg-white rounded'>
                             <Link href="/login">
-                                <a className='w-full text-center text-sm block py-2 hover:bg-blue-400 hover:text-white font-semibold text-gray-600'>
+                                <a className='w-full text-center text-sm block py-2 hover:bg-fuchsia-700 hover:text-white font-semibold text-gray-600'>
                                     로그인
                                 </a>
                             </Link>
                             <Link href="/register">
-                                <a className='w-full text-center text-sm block py-2 hover:bg-blue-400 hover:text-white font-semibold text-gray-600'>
+                                <a className='w-full text-center text-sm block py-2 hover:bg-fuchsia-700 hover:text-white font-semibold text-gray-600'>
                                     회원가입
                                 </a>
                             </Link>
@@ -116,7 +116,7 @@ const NavBar: React.FC = () => {
                     {!loading && (
                         authenticated ? (
                             <button
-                                className='w-20 px-2 mr-2 text-center text-sm text-white bg-gray-400 rounded h-7'
+                                className='w-20 px-2 mr-2 text-center text-sm text-white bg-fuchsia-700 rounded h-7'
                                 onClick={handleLogout}
                             >
                                 로그아웃
@@ -124,12 +124,12 @@ const NavBar: React.FC = () => {
                         ) : (
                             <>
                                 <Link href="/login">
-                                    <a className='w-20 px-2 pt-1 mr-2 text-center text-sm text-blue-500 border border-blue-500 rounded h-7'>
+                                    <a className='w-20 px-2 pt-1 mr-2 text-center text-sm text-fuchsia-700 border border-fuchsia-700 rounded h-7'>
                                         로그인
                                     </a>
                                 </Link>
                                 <Link href="/register">
-                                    <a className='w-20 px-2 pt-1 text-center text-sm text-white bg-gray-400 rounded h-7'>
+                                        <a className='w-20 px-2 pt-1 text-center text-sm text-white bg-fuchsia-700 rounded h-7'>
                                         회원가입
                                     </a>
                                 </Link>

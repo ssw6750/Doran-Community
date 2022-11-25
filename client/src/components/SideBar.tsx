@@ -13,7 +13,13 @@ const SideBar = ({sub}: Props) => {
   return (
     <div className='hidden w-4/12 ml-3 md:block'>
         <div className='bg-white border rounded'>
-            <div className='p-3 bg-gray-400 rounded-t'>
+            <div className='p-3 bg-gray-400 rounded-t'
+                  style={{
+                      backgroundImage: `linear-gradient(rgba(135, 80, 156, 0.9), rgba(135, 80, 156, 0.9)), url(/tree-2249363_1920.jpg)`,
+                      backgroundRepeat: 'no-repeat',
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                  }}>
                 <p className='font-semibold text-white'>커뮤니티에 대해서</p>
             </div>
             <div className='p-3'>
