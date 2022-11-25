@@ -82,7 +82,7 @@ const PostCard = ({
         <div className='w-full p-2'>
             <div className='flex items-center'>
             {!isInSubPage && (
-                <div className='flex items-center'>
+                <div className='flex items-center z-0'>
                 <Link href={`/r/${subName}`}>
                     <a>
                         {sub&&

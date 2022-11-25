@@ -85,7 +85,7 @@ const Home: NextPage = () => {
               backgroundPosition: 'center',
             }}
             >
-            <p className='text-lg font-semibold text-center text-white'>커뮤니티 랭킹</p>
+            <p className='text-lg font-medium text-center text-white'>Community Ranking</p>
           </div>
 
           {/* 커뮤니티 리스트 */}
@@ -136,10 +136,14 @@ const Home: NextPage = () => {
               backgroundPosition: 'center',
             }}
           >
-            <p className='text-lg font-semibold text-center text-white'>MENU</p>
+            <p className='text-lg font-medium text-center text-white'>Menu</p>
           </div>
 
-
+          <div className='w-full pt-2 pb-2 text-center border-b border-gray-300 px-2'>
+            <a className='text-sm text-gray-700'>
+              Reddit 커뮤니티 사이트를 모방한 사이드 프로젝트
+            </a>
+          </div>
           {authenticated &&
           <div>
             <div className='w-full pt-4 pb-2 text-center'>
@@ -152,12 +156,15 @@ const Home: NextPage = () => {
               <div className='w-full pt-2 pb-4 text-center'>
               <Link href="/posts/create">
                   <a className='w-full px-16 py-1 text-center text-fuchsia-800 border border-fuchsia-800 rounded-full text-sm'>
-                  프스트 생성
+                  포스트 생성
                 </a>
               </Link>
             </div>
             </div>
           }
+          <div>
+            
+          </div>
         </div>
       </div>
 
