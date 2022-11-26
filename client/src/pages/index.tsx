@@ -93,9 +93,9 @@ const Home: NextPage = () => {
 
 
   return (
-    <div className="max-w-5xl px-4 pt-5 mx-auto">
+    <div className="max-w-5xl px-4 pt-2 mx-auto">
       <div className='hidden md:block'>
-        <div className='justify-content flex mb-4'>
+        <div className='justify-content flex mb-2'>
           {
             banners?.map(banner => (
               <div className='h-36  bg-gray-500 flex-auto first:ml-0 mx-1 last:mr-0 rounded relative'
