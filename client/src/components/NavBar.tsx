@@ -162,7 +162,7 @@ const NavBar: React.FC = () => {
                                                         className='fas fa-pencil-alt fa-lg' />
                                                 </div>
                                                 <Link href={`/posts/create`}>
-                                                    <a className='w-full  text-sm block p-2 text-gray-600 font-thin'>
+                                                    <a className='w-full text-sm block p-2 text-gray-600 font-thin'>
                                                         포스트 생성
                                                     </a>
                                                 </Link>
