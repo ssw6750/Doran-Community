@@ -12,6 +12,15 @@ const NavBar: React.FC = () => {
     const { loading, authenticated, user } = useAuthState();
     const dispatch = useAuthDispatch();
 
+    type gridColumnsType = {
+        [key: number]: string;
+    };
+
+    const gridColumns: gridColumnsType = {
+        0: "fixed inset-x-0 top-0 z-10 flex items-center justify-center h-12 px-4 bg-white border-b transition-all rounded-b md:top-12`",
+        1: "fixed inset-x-0 top-12 z-10 flex items-center justify-center h-12 px-4 bg-white border-b transition-all rounded-b md:top-12`",
+    };
+
     const handleLogout = () => {
         axios.post("/auth/logout")
             .then(() => {
@@ -33,8 +42,15 @@ const NavBar: React.FC = () => {
 
     // 하드 코딩 수정 필요,,
     const handleSearchBar = () => {
-        if (searchBarPosition === 0) setSearchBarPosition(12)
-        if (searchBarPosition === 12) setSearchBarPosition(0)
+        if (searchBarPosition === 0) {
+            setSearchBarPosition(searchBarPosition+1)
+            console.log(searchBarPosition);
+                
+        }
+        else {
+            setSearchBarPosition(searchBarPosition-1)
+            console.log(searchBarPosition);
+}
  
     }
 
@@ -53,6 +69,8 @@ const NavBar: React.FC = () => {
             return setMenuOpen(false);
         }
     };
+
+
 
     useEffect(() => {
         document.addEventListener("click", handleClickOutsideMyPage, true);
@@ -278,7 +296,7 @@ const NavBar: React.FC = () => {
                 </div>
             </div>
         </div>
-            <div className={`fixed inset-x-0 top-${searchBarPosition} z-10 flex items-center justify-center h-12 px-4 bg-white border-b transition-all rounded-b-md md:top-0`}>
+            <div className={gridColumns[searchBarPosition]}>
                 <div className='relative flex items-center h-7 bg-gray-100 border rounded hover:border-fuchsia-800 hover:bg-white'>
                     <FaSearch className='ml-2 text-gray-400' />
                     <input
