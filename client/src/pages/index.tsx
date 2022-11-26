@@ -59,116 +59,159 @@ const Home: NextPage = () => {
 
   }
 
+  const ar = ['/cat.jpg', '/tree-2249363_1920.jpg', '/cat02.jpg', '/bug01.jpg']
+
 
   return (
-    <div className="flex max-w-5xl px-4 pt-5 mx-auto">
-      {/* 포스트리스트 */}
-      <div className='w-full md:mr-3 md:w-8/12'>
-        {isInitalLoading && <p className='text-lg text-center'>로딩중입니다...</p>}
-        {posts?.map(post => (
-          <PostCard
-            key={post.identifier}
-            post={post}
-            mutate={mutate}
-          />
-        ))}
+    <div className="max-w-5xl px-4 pt-5 mx-auto">
+      <div className='hidden md:block'>
+        <div className='justify-content flex mb-4'>
+          {
+            ar?.map(p => (
+              <div className='h-36  bg-gray-500 flex-auto first:ml-0 mx-1 last:mr-0 rounded relative'
+                style={{
+                  backgroundImage: `linear-gradient(rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.9)), url(${p})`,
+                  backgroundRepeat: 'no-repeat',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                }}
+                key={p}><div className='absolute text-white bottom-0 left-0 right-0 m-2'>
+                  <div className='truncate'>배너 테스트 타이틀</div>
+                  <div className='truncate w-inherit text-xs'>배너 테스트 내용입니닷!어쩌구 저쩌구 이!어쩌구 저쩌구 이!어쩌구 저쩌구 이!어쩌구 저쩌구 이러쩌구 저쩌구 이!어쩌구 저쩌구 이러쿵</div>
+                </div></div>
+            )
+            )
+          }
+        </div>
       </div>
 
-      {/* 사이드바 */}
-      <div className='hidden w-4/12 ml-3 md:block'>
-        <div className='bg-white border rounded mb-6'>
-          <div className='p-4 border-b rounded-t'       
-            style={{
-              backgroundImage: `linear-gradient(rgba(135, 80, 156, 0.9), rgba(135, 80, 156, 0.9)), url(/tree-2249363_1920.jpg)`,
-              backgroundRepeat: 'no-repeat',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-            }}
+      <div className='md:hidden  mb-4'>
+        <div className='h-36  bg-gray-500 first:ml-0 mx-1 last:mr-0 rounded relative'
+          style={{
+            backgroundImage: `url(${ar[0]})`,
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}>
+          <div className='absolute text-white bottom-0 left-0 right-0 m-2'>
+            <div className='truncate'>배너 테스트 타이틀</div>
+            <div className='truncate w-inherit text-xs'>배너 테스트 내용입니닷!어쩌구 저쩌구 이!어쩌구 저쩌구 이!어쩌구 저쩌구 이!어쩌구 저쩌구 이러쩌구 저쩌구 이!어쩌구 저쩌구 이러쿵</div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div className="flex">
+        {/* 포스트리스트 */}
+        <div className='w-full md:mr-3 md:w-8/12'>
+          {isInitalLoading && <p className='text-lg text-center'>로딩중입니다...</p>}
+          {posts?.map(post => (
+            <PostCard
+              key={post.identifier}
+              post={post}
+              mutate={mutate}
+            />
+          ))}
+        </div>
+
+        {/* 사이드바 */}
+        <div className='hidden w-4/12 ml-3 md:block'>
+          <div className='bg-white border rounded mb-6'>
+            <div className='p-4 border-b rounded-t'
+              style={{
+                backgroundImage: `url('/8753.jpg')`,
+                backgroundRepeat: 'no-repeat',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+              }}
             >
-            <p className='text-lg font-medium text-center text-white'>Community Ranking</p>
-          </div>
+              <p className='text-lg font-medium text-center text-white font-serif'>Community Ranking</p>
+            </div>
 
-          {/* 커뮤니티 리스트 */}
-          <div>
-            {topSubs?.map((sub) => (
-              <div
-                key={sub.name}
-                className='flex items-center px-4 py-2 text-xs border-b'
-              >
-                <Link href={`/r/${sub.name}`}>
-                  <a>
-                    <Image
-                      src={sub.imageUrl}
-                      className='rounded-full cursor-pointer'
-                      alt="Sub"
-                      width={24}
-                      height={24}
-                    />
+            {/* 커뮤니티 리스트 */}
+            <div>
+              {topSubs?.map((sub) => (
+                <div
+                  key={sub.name}
+                  className='flex items-center px-4 py-2 text-xs border-b'
+                >
+                  <Link href={`/r/${sub.name}`}>
+                    <a>
+                      <Image
+                        src={sub.imageUrl}
+                        className='rounded-full cursor-pointer'
+                        alt="Sub"
+                        width={24}
+                        height={24}
+                      />
+                    </a>
+                  </Link>
+                  <Link href={`/r/${sub.name}`}>
+                    <a className='ml-2 font-bold hover:cursor-pointer'>
+                      /r/{sub.name}
+                    </a>
+                  </Link>
+                  <p className='ml-auto font-md'>{sub.postCount}</p>
+                </div>
+              ))}
+            </div>
+
+            {authenticated &&
+              <div className='w-full py-4 text-center'>
+                <Link href="/subs/list">
+                  <a className='w-full px-3 py-1 text-center text-white bg-fuchsia-800 rounded text-sm'>
+                    전체 커뮤니티
                   </a>
                 </Link>
-                <Link href={`/r/${sub.name}`}>
-                  <a className='ml-2 font-bold hover:cursor-pointer'>
-                    /r/{sub.name}
-                  </a>
-                </Link>
-                <p className='ml-auto font-md'>{sub.postCount}</p>
               </div>
-            ))}
+            }
           </div>
 
-          {authenticated &&
-            <div className='w-full py-4 text-center'>
-              <Link href="/subs/list">
-                <a className='w-full px-3 py-1 text-center text-white bg-fuchsia-800 rounded text-sm'>
-                  전체 커뮤니티
-                </a>
-              </Link>
+          <div className='bg-white border rounded'>
+            <div className='p-2 border-b rounded-t'
+              style={{
+                // backgroundImage: `linear-gradient(rgba(135, 80, 156, 0.9), rgba(135, 80, 156, 0.9)), url(/tree-2249363_1920.jpg)`,
+                backgroundImage: `url('/8753.jpg')`,
+                backgroundRepeat: 'no-repeat',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+              }}
+            >
+              <p className='text-lg font-medium text-center text-white font-serif'>Menu</p>
             </div>
-          }
-        </div>
 
-        <div className='bg-white border rounded'>
-          <div className='p-2 border-b rounded-t'
-            style={{
-              backgroundImage: `linear-gradient(rgba(135, 80, 156, 0.9), rgba(135, 80, 156, 0.9)), url(/tree-2249363_1920.jpg)`,
-              backgroundRepeat: 'no-repeat',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-            }}
-          >
-            <p className='text-lg font-medium text-center text-white'>Menu</p>
-          </div>
+            <div className='w-full pt-2 pb-2 text-center border-b border-gray-300 px-2'>
+              <a className='text-sm text-gray-700'>
+                Reddit 커뮤니티 사이트를 모방한 사이드 프로젝트
+              </a>
+            </div>
+            {authenticated &&
+              <div>
+                <div className='w-full pt-4 pb-2 text-center'>
+                  <Link href="/subs/create">
+                    <a className='w-full px-16 py-1 text-center text-white bg-fuchsia-800 rounded-full text-sm'>
+                      커뮤니티 생성
+                    </a>
+                  </Link>
+                </div>
+                <div className='w-full pt-2 pb-4 text-center'>
+                  <Link href="/posts/create">
+                    <a className='w-full px-16 py-1 text-center text-fuchsia-800 border border-fuchsia-800 rounded-full text-sm'>
+                      포스트 생성
+                    </a>
+                  </Link>
+                </div>
+              </div>
+            }
+            <div>
 
-          <div className='w-full pt-2 pb-2 text-center border-b border-gray-300 px-2'>
-            <a className='text-sm text-gray-700'>
-              Reddit 커뮤니티 사이트를 모방한 사이드 프로젝트
-            </a>
-          </div>
-          {authenticated &&
-          <div>
-            <div className='w-full pt-4 pb-2 text-center'>
-              <Link href="/subs/create">
-                <a className='w-full px-16 py-1 text-center text-white bg-fuchsia-800 rounded-full text-sm'>
-                  커뮤니티 생성
-                </a>
-              </Link>
             </div>
-              <div className='w-full pt-2 pb-4 text-center'>
-              <Link href="/posts/create">
-                  <a className='w-full px-16 py-1 text-center text-fuchsia-800 border border-fuchsia-800 rounded-full text-sm'>
-                  포스트 생성
-                </a>
-              </Link>
-            </div>
-            </div>
-          }
-          <div>
-            
           </div>
         </div>
       </div>
 
-      
+
 
     </div>
   )
