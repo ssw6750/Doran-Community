@@ -123,10 +123,14 @@ const upload = multer({
         }
     }),
     fileFilter: (_, file:any, callback: FileFilterCallback) => {
-        if(file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
-            callback(null, true)
+        if (
+          file.mimetype === "image/jpeg" ||
+          file.mimetype === "image/png" ||
+          file.mimetype === "image/webp"
+        ) {
+          callback(null, true);
         } else {
-            callback(new Error("이미지가 아닙니다."))
+          callback(new Error("이미지가 아닙니다."));
         }
     }
 })
