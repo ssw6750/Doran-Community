@@ -3,10 +3,11 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
 import useSWR from 'swr';
-import PostCard from '../../components/PostCard';
 import SideBar from '../../components/SideBar';
 import { useAuthState } from '../../context/auth';
-import { Post } from '../../types';
+import Posts from '../../components/Posts/Posts';
+import Category from '../../components/Category';
+
 
 const SubPage = () => {
     const [ownSub, setOwnSub] = useState(false);
@@ -15,11 +16,19 @@ const SubPage = () => {
     const fileInputRef = useRef<HTMLInputElement>(null)
     const router = useRouter();
     const subName= router.query.sub;
+
     const {data:sub, error, mutate} = useSWR(subName ? `/subs/${subName}` : null);
+    // const getKey = (pageIndex: number, previousPageData: Post[]) => {
+    //     if (previousPageData && !previousPageData.length) return null;
+    //     return `/posts?page=${pageIndex}`
+    // }
+
+    // const { data: sub, error, size: page, setSize: setPage, isValidating, mutate } = useSWRInfinite<Post[]>(getKey);
 
     useEffect(()=> {
         if(!sub || !user) return;
         setOwnSub(authenticated && user.username === sub.username)
+        
     }, [sub])
 
     const uploadImage = async(event: ChangeEvent<HTMLInputElement>) => {
@@ -58,10 +67,13 @@ const SubPage = () => {
     } else if (sub.posts.length === 0) {
         renderPosts = <p className='text-lg text-center'>아직 작성된 포스트가 없습니다.</p>
     } else {
-        renderPosts = sub.posts.map((post:Post)=> (
-            <PostCard key={post.identifier} post={post} subMutate={mutate}/>
-        ))
+        // renderPosts = sub.posts.map((post:Post)=> (
+        //     <PostCard key={post.identifier} post={post} subMutate={mutate}/>
+        // ))
+        renderPosts = <Posts subName={subName}/>
     }
+
+
   return (
     <div>
         {sub &&
@@ -72,7 +84,7 @@ const SubPage = () => {
                     <div className='bg-gray-400'>
                         {sub.bannerUrl? (
                             <div
-                            className='h-56'
+                            className='h-80'
                             style={{
                                 backgroundImage: `url(${sub.bannerUrl})`,
                                 backgroundRepeat: 'no-repeat',
@@ -88,9 +100,9 @@ const SubPage = () => {
                     </div>
 
                     {/* 커뮤니티 메타 데이터 */}
-                    <div className='h-20 bg-white'>
+                    <div className=' bg-basic-white'>
                         <div className='relative flex max-w-5xl px-5 mx-auto'>
-                            <div className='absolute' style={{top: -15}}>
+                        <div className='absolute' style={{top: -15}}>
                                 {sub.imageUrl && (
                                     <Image
                                         src={sub.imageUrl}
@@ -104,9 +116,9 @@ const SubPage = () => {
                             </div>
                             <div className='pt-1 pl-24'>
                                 <div className='flex items-center'>
-                                    <h1 className='text-3xl font-bold'>{sub.title}</h1>
+                                    <h1 className='text-4xl font-ptBlack text-basic-black-second'>{sub.title}</h1>
                                 </div>
-                                <p className='font-bold text-gray-400 text-small'>
+                                <p className='font-bold text-basic-black text-small'>
                                     /r/{sub.name} 
                                 </p>
                             </div>
@@ -116,7 +128,12 @@ const SubPage = () => {
                 {/* 포스트와 사이드바 */}
                 <div className='flex max-w-5xl px-4 pt-5 mx-auto'>
                     <div className='w-full md:mr-3, md:w-8/12'>{renderPosts}</div>
+                  <div className='hidden w-4/12 ml-3 md:block'>
                         <SideBar sub={sub}/>
+                  <div className='mt-4'>
+                      <Category></Category>
+                  </div>
+                  </div>
                 </div>
             </>
         }
