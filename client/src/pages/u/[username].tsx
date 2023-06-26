@@ -39,7 +39,7 @@ const UserPage = () => {
                                         </a>
                                     </Link>{" "}
                                     <span>commented on</span>{" "}
-                                    <Link href={`/u/${comment.post?.url}`}>
+                                    <Link href={`/${comment.post?.url}`}>
                                         <a className='cursor-pointer font-semibold hover:underline'>
                                             {comment.post?.url}
                                         </a>
