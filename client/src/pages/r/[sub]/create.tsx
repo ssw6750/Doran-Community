@@ -22,8 +22,8 @@ const PostCreate = () => {
             })
             // console.log(r/${subName}/${post.identifier}/${post.slug}`);
             
-            // router.push(`/r/${subName}/${post.identifier}/${post.slug}`);
-            router.push(`${post.identifier}/${post.slug}`);
+            router.push(`/r/${subName}/${post.identifier}/${post.slug}`);
+            // router.push(`${post.identifier}/${post.slug}`);
         } catch (error) {
             console.log(error)
         }
