@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import {Post} from '../types'
 import {FaArrowUp, FaArrowDown} from "react-icons/fa"
 import Link from 'next/link'
@@ -12,6 +12,7 @@ interface PostCardProps {
     post: Post
     subMutate?: () => void
     mutate?: () => void
+    deletePost?: any
 }
 
 const PostCard = ({
@@ -30,11 +31,13 @@ const PostCard = ({
     sub
     },
     mutate,
-    subMutate
+    subMutate,
+    deletePost
 }: PostCardProps) => {
     const router = useRouter()
     const isInSubPage = router.pathname === '/r/[sub]'
-    const {authenticated} = useAuthState()
+    const { authenticated, user } = useAuthState()
+    const [ownPost, setOwnPost] = useState(false);
 
 
     const vote = async(value:number) => {
@@ -49,15 +52,22 @@ const PostCard = ({
         } catch (error) {
             console.log(error);        
         }
-    } 
+    }
+
+    useEffect(() => {
+        if (!user) return;
+        setOwnPost(authenticated && user.username === username)
+
+    }, [sub])
+
 
   return (
     <div
-        className='flex mb-4 bg-white rounded'
+        className='flex bg-white rounded border-b border-basic-gray-third mb-0 text-basic-black-second relative'
         id = {identifier}
     >
         {/* 좋아요 싫어요 기능 부분 */}
-        <div className='flex-shrink-0 w-10 py-2 text-center rounded-l'>
+          <div className='flex-shrink-0 w-10 py-2 text-center rounded-l bg-basic-gray-4'>
           {/* 좋아요 */}
           <div
             className='flex justify-center w-6 mx-auto text-gray-400 rounded cursor-pointer hover:bg-gray-300 hover:text-red-500'
@@ -79,12 +89,12 @@ const PostCard = ({
           </div>
         </div>
         {/* 포스트 데이터 부분 */}
-        <div className='w-full p-2'>
+        <div className='w-full pl-2 pr-2'>
             <div className='flex items-center'>
             {!isInSubPage && (
-                <div className='flex items-center z-0'>
+                <div className='flex items-center z-0 overflow-h'>
                 <Link href={`/r/${subName}`}>
-                    <a>
+                    <a className='w-3'>
                         {sub&&
                             <Image
                                 src={sub.imageUrl}
@@ -97,8 +107,8 @@ const PostCard = ({
                     </a>
                 </Link>
                 <Link href={`/r/${subName}`}>
-                    <a className='ml-2 text-xs font-bold cursor-pointer hover:underline'>
-                        /r/{subName}
+                              <a className='ml-2 text-xs font-bold cursor-pointer hover:underline text-basic-black-second whitespace-nowrap overflow-hidden text-ellipsis max-w-post-name'>
+                        {subName}
                     </a>                 
                 </Link>
                 <span className='mx-1 text-xs text-gray-400'>·</span>
@@ -106,7 +116,7 @@ const PostCard = ({
             )}  
 
             <p className='text-xs text-gray-400'>
-                Posted by
+                      <span>Posted&nbsp;by</span>
                 <Link href={`/u/${username}`}>
                     <a className='mx-1 hover:underline'>/u/{username}</a>
                 </Link>
@@ -117,17 +127,18 @@ const PostCard = ({
             </div>
         
             <Link href={url}>
-                <a className='my-1 text-lg font-medium'>{title}</a>
+                  <a className='my-1 text-base font-ptBlack'>{title}</a>
             </Link>
-            {body &&  <p className="my-1 text-sm">{body}</p>}
+            {body &&  <p className="text-sm">{body}</p>}
             <div className='flex'>
                 <Link href={url}>
                     <a>
                         <i className='mr-1 fas fa-comment-alt fa-xs'></i>
-                        <span>{commentCount}</span>
+                          <span className="text-xs">{commentCount}</span>
                     </a>
                 </Link>
             </div>
+              {ownPost && <div className='absolute right-2 bottom-1 text-sm' onClick={() => { deletePost(event, identifier, slug) }}>삭제</div>}
         </div>
 
         
