@@ -13,7 +13,13 @@ import { useEffect, useState } from 'react'
 
 import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
+import { FaFire } from "react-icons/fa";
+import { FaSun } from "react-icons/fa";
+import { FaThumbsUp } from "react-icons/fa";
+import { FaAngleDoubleUp } from "react-icons/fa";
 import MainImageBanner from '../components/MainImageBanner'
+import Posts from '../components/Posts/Posts'
+import Category from '../components/Category'
 
 const Home: NextPage = () => {
   const { authenticated } = useAuthState();
@@ -22,96 +28,81 @@ const Home: NextPage = () => {
   }
   const address = "/subs/sub/topSubs"
 
-  const getKey = (pageIndex: number, previousPageData: Post[]) => {
-    if (previousPageData && !previousPageData.length) return null;
-    return `/posts?page=${pageIndex}`
-  }
-
-  const { data, error, size: page, setSize: setPage, isValidating, mutate } = useSWRInfinite<Post[]>(getKey);
-  const isInitalLoading = !data && !error;
-  const posts: Post[] = data ? ([] as Post[]).concat(...data) : [];
   const { data: topSubs } = useSWR<Sub[]>(address, fetcher);
-
-  const [observedPost, setObservedPost] = useState("");
-  const [slideNumber, setSlideNumber] = useState(0)
-
-
-
-  useEffect(() => {
-    // 포스트가 없다면 return
-    if (!posts || posts.length === 0) return;
-    // posts 배열안에 마지막 post에 id를 가져옵니다.
-    const id = posts[posts.length - 1].identifier;
-    if (id !== observedPost) {
-      setObservedPost(id);
-      observeElement(document.getElementById(id));
-    }
-  }, [posts])
-
-
-
-  const observeElement = (element: HTMLElement | null) => {
-    if (!element) return;
-    // 브라우저 뷰포트와 설정한 요소를의 교차점을 관찰
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting === true) {
-          console.log("마지막 포스트에 왔습니다.");
-          setPage(page + 1);
-          observer.unobserve(element)
-        }
-      },
-      { threshold: 1 }
-    );
-    // 대상 요소의 관찰을 시작
-    observer.observe(element);
-
-  }
-
-
-
+  
   return (
     <div className="max-w-5xl px-4 pt-2 mx-auto">
-      <MainImageBanner/>
-      
-  
-
-
+      <MainImageBanner/>   
       <div className="flex">
-        {/* 포스트리스트 */}
+        {/* 포스트리스트 */}  
         <div className='w-full md:mr-3 md:w-8/12'>
-          {isInitalLoading && <p className='text-lg text-center'>로딩중입니다...</p>}
-          {posts?.map(post => (
-            <PostCard
-              key={post.identifier}
-              post={post}
-              mutate={mutate}
-            />
-          ))}
+
+          {/* 포스트 메뉴 */}
+          <div className="flex p-4 items-end w-full h-24 border border-basic-gray-third bg-white mb-2 relative gap-6 text-gray-400">
+            <p className='absolute top-4 text-lg text-basic-black-second font-ptBlack'>전체</p>
+
+            <button className='flex justify-center items-center hover:text-basic-red text-sm'>
+              <FaFire className='text-lg' />
+              <p className='ml-2'>인기</p>
+            </button>
+            <button className='flex justify-center items-center hover:text-basic-red text-sm'>
+              <FaSun className='text-lg' />
+              <p className='ml-2'>최신</p>
+            </button>
+            <button className='flex justify-center items-center hover:text-basic-red text-sm'>
+              <FaThumbsUp className='text-lg' />
+              <p className='ml-2'>추천</p>
+            </button>
+            <button className='flex justify-center items-center hover:text-basic-red text-sm'>
+              <FaAngleDoubleUp className='text-lg' />
+              <p className='ml-2'>TOP</p>
+            </button>
+            
+          </div>
+
+          <div className="flex items-end w-full h-24 border mb-2 border-basic-gray-third relative text-basic-white "
+            style={{
+              backgroundImage: `url(https://cdn.gameinsight.co.kr/news/photo/202202/24053_61496_3054.jpg)`,
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: 'cover',
+              backgroundPosition: '50% 52%',
+            }}
+            onClick={() => {
+              window.location.href = 'https://playvalorant.com/ko-kr/'; // 외부 링크 주소를 여기에 입력합니다.
+            }}>
+            <div className="hover-overlay w-full h-full bg-basic-red opacity-0 hover:opacity-100 transition-opacity duration-500 ease-in-out"
+              style={{
+                backgroundImage: `url(https://cdna.artstation.com/p/assets/images/images/030/940/370/small/lorenzo-lanfranconi-west-studio-lorenzo-lanfranconi-valorant-1.jpg?1602102081)`,
+                backgroundRepeat: 'no-repeat',
+                backgroundSize: 'cover',
+                backgroundPosition: '50% 45%',
+              }}>
+            </div>
+            <p className='absolute bottom-0 right-0 mr-2 mb-1 text-xs '>홈페이지 바로가기</p>   
+          </div>
+          <Posts />
         </div>
 
         {/* 사이드바 */}
         <div className='hidden w-4/12 ml-3 md:block'>
-          <div className='bg-white border rounded mb-6'>
-            <div className='p-4 border-b rounded-t'
+          <div className='bg-white rounded mb-6'>
+            <div className='p-3 rounded-t bg-basic-black-second'
               style={{
-                backgroundImage: `url('/8753.jpg')`,
-                backgroundRepeat: 'no-repeat',
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
+                background: `linear-gradient(-45deg, #ff4654 50%, #101823 50%)`,
               }}
             >
-              <p className='text-lg font-medium text-center text-white font-serif'>Community Ranking</p>
+              <p className='text-xl text-basic-white font-ptBlack'>인기 게시판</p>
             </div>
 
             {/* 커뮤니티 리스트 */}
             <div>
-              {topSubs?.map((sub) => (
+              {topSubs?.map((sub, idx) => (
                 <div
                   key={sub.name}
-                  className='flex items-center px-4 py-2 text-xs border-b'
+                  className='flex items-center text-xs bg-basic-gray-second border-b border-basic-gray-third relative h-10'
                 >
-                  <Link href={`/r/${sub.name}`}>
+                  <div className='text-sm font-ptBlack bg-basic-gray w-8 h-full flex items-center justify-center mr-2'>{idx+1}</div>
+                  <Link href={`/r/${sub.name}`}>                    
                     <a>
                       <Image
                         src={sub.imageUrl}
@@ -127,12 +118,15 @@ const Home: NextPage = () => {
                       /r/{sub.name}
                     </a>
                   </Link>
-                  <p className='ml-auto font-md'>{sub.postCount}</p>
+                  <div className='text-xs bg-basic-gray w-12 h-full flex items-center justify-end absolute right-0'>
+                    <p className='absolute right-2'>{sub.postCount}개</p>
+                  </div>
+                  {/* <p className='absolute right-2 font-md'>{sub.postCount}</p> */}
                 </div>
               ))}
             </div>
 
-            {authenticated &&
+            {/* {authenticated &&
               <div className='w-full py-4 text-center'>
                 <Link href="/subs/list">
                   <a className='w-full px-3 py-1 text-center text-white bg-fuchsia-800 rounded text-sm'>
@@ -140,49 +134,10 @@ const Home: NextPage = () => {
                   </a>
                 </Link>
               </div>
-            }
+            } */}
           </div>
 
-          <div className='bg-white border rounded'>
-            <div className='p-2 border-b rounded-t'
-              style={{
-                // backgroundImage: `linear-gradient(rgba(135, 80, 156, 0.9), rgba(135, 80, 156, 0.9)), url(/tree-2249363_1920.jpg)`,
-                backgroundImage: `url('/8753.jpg')`,
-                backgroundRepeat: 'no-repeat',
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-              }}
-            >
-              <p className='text-lg font-medium text-center text-white font-serif'>Menu</p>
-            </div>
-
-            <div className='w-full pt-2 pb-2 text-center border-b border-gray-300 px-2'>
-              <a className='text-sm text-gray-700'>
-                Reddit 커뮤니티 사이트를 모방한 사이드 프로젝트
-              </a>
-            </div>
-            {authenticated &&
-              <div>
-                <div className='w-full pt-4 pb-2 text-center'>
-                  <Link href="/subs/create">
-                    <a className='w-full px-16 py-1 text-center text-white bg-fuchsia-800 rounded-full text-sm'>
-                      커뮤니티 생성
-                    </a>
-                  </Link>
-                </div>
-                <div className='w-full pt-2 pb-4 text-center'>
-                  <Link href="/posts/create">
-                    <a className='w-full px-16 py-1 text-center text-fuchsia-800 border border-fuchsia-800 rounded-full text-sm'>
-                      포스트 생성
-                    </a>
-                  </Link>
-                </div>
-              </div>
-            }
-            <div>
-
-            </div>
-          </div>
+          <Category></Category>
         </div>
       </div>
 
