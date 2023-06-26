@@ -10,35 +10,36 @@ type Props = {
 
 const SideBar = ({sub}: Props) => {
     const {authenticated} = useAuthState()
+    
+    console.log('sub: ', sub)
+    console.log('sub.name: ', sub?.name)
   return (
-    <div className='hidden w-4/12 ml-3 md:block'>
-        <div className='bg-white border rounded'>
-            <div className='p-3 bg-gray-400 rounded-t'
+      <div className='hidden md:block text-basic-black '>
+          <div className='rounded bg-basic-white'>
+              <div className='rounded-t'
                   style={{
-                      backgroundImage: `linear-gradient(rgba(135, 80, 156, 0.9), rgba(135, 80, 156, 0.9)), url(/tree-2249363_1920.jpg)`,
-                      backgroundRepeat: 'no-repeat',
-                      backgroundSize: 'cover',
-                      backgroundPosition: 'center',
+                      background: `linear-gradient(-45deg, #ff4654 50%, #101823 50%)`,
                   }}>
-                <p className='font-semibold text-white'>커뮤니티에 대해서</p>
+                  <p className='font-semibold font-ptBlack text-xl text-basic-yellow px-4 py-2'>
+                    {sub?.name} 게시판</p>
             </div>
-            <div className='p-3'>
-                <p className='mb-3 text-base'>{sub?.description}</p>
-                <div className='flex mb-3 text-sm font-medium'>
+              <div className='px-4 py-2'>
+                  <p className='mb-3 text-sm'>{sub?.description}</p>
+                  <div className='flex mb-3 text-sm font-medium text-basic-black-border'>
                     <div className='w-1/2'>
-                        <p>100</p>
-                        <p>멤버</p>
+                        <p>공지 바로가기</p>
+                        <p>자세히 보기</p>
                     </div>
                 </div>
-                <p className='my-3'>
+                  <p className='my-3 text-xs'>
                     <i className='mr-2 fas fa-birthday-cake'></i>
                     {dayjs(sub?.createdAt).format('MM.DD.YYYY')}
                 </p>
                 {authenticated && (
-                    <div className='mx-0 my-2'>
-                        <Link href={`/r/${sub.name}/create`}>
-                            <a className='w-full p-2 text-sm text-white bg-gray-400 rounded'>
-                                포스트 생성
+                    <div>
+                        <Link href={`/r/${sub?.name}/create`}>
+                              <a className='w-full block text-center p-2 text-sm text-basic-red border border-basic-red rounded text-sm hover:text-basic-white hover:bg-basic-red font-ptBlack rounded'>
+                                포스트 생성 
                             </a>
                         </Link>
                     </div>
