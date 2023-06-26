@@ -8,14 +8,16 @@ import Comment from "../entities/Comment";
 const getPosts = async(req: Request, res:Response) => {
     const currentPage: number = (req.query.page || 0) as number;
     const perPage: number = (req.query.count ||  8) as number;
+    const subName: any = req.query.subName;
 
     try {
         const posts = await Post.find({
-            order: {createdAt: "DESC"},
-            relations: ["sub", "votes", "comments"],
-            skip: currentPage * perPage,
-            take: perPage
-        })
+          where: { subName },
+          order: { createdAt: "DESC" },
+          relations: ["sub", "votes", "comments"],
+          skip: currentPage * perPage,
+          take: perPage,
+        });
 
         if(res.locals.user) {
             posts.forEach(p=>p.setUserVote(res.locals.user))
@@ -29,7 +31,7 @@ const getPosts = async(req: Request, res:Response) => {
 }
 
 const getPost = async (req:Request, res: Response) => {
-    const { identifier, slug} = req.params;
+    const { identifier, slug } = req.params;
     try {
         const post = await Post.findOneOrFail({
             where: {identifier, slug},
@@ -115,6 +117,26 @@ const createPostComment = async (req:Request, res: Response) => {
     }
 };
 
+const deletePost = async (req: Request, res: Response) => {
+    console.log(req.body);
+    const { identifier, slug, commentIdentifier, value } = req.body;
+
+    try {
+      let post: Post | undefined = await Post.findOneByOrFail({
+        identifier,
+        slug,
+      });
+
+      if(post) {
+          await post.remove()
+          return res.json("삭제완료");
+      }
+    } catch (error) {
+
+    }
+
+};
+
 const router = Router();
 router.get("/:identifier/:slug", userMiddleware, getPost)
 router.post("/", userMiddleware, authMiddleware, createPost);
@@ -123,4 +145,5 @@ router.get("/", userMiddleware, getPosts)
 router.get("/:identifier/:slug/comments", userMiddleware, getPostComment)
 router.post("/:identifier/:slug/comments",  userMiddleware, createPostComment)
 
+router.delete("/", deletePost);
 export default router
