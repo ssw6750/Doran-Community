@@ -8,11 +8,7 @@ import { useEffect, useState, MouseEvent } from 'react'
 import { useAuthState } from '../../context/auth';
 
 
-function Posts({ subName }: { subName: string }) {
-
-  // console.log('subName: ', subName);
-  // subName = '제트'
-  // console.log('subName: ', subName);
+function Posts({ subName }: { subName?: any }) {
 
   const getKey = (pageIndex: number, previousPageData: Post[]) => {
     if (previousPageData && !previousPageData.length) return null;
@@ -22,10 +18,7 @@ function Posts({ subName }: { subName: string }) {
   const { data, error, size: page, setSize: setPage, isValidating, mutate } = useSWRInfinite<Post[]>(getKey);
   const isInitalLoading = !data && !error;
   const posts: Post[] = data ? ([] as Post[]).concat(...data) : [];
-
   const [observedPost, setObservedPost] = useState("");
-
-
 
   useEffect(() => {
     // 포스트가 없다면 return
@@ -37,8 +30,6 @@ function Posts({ subName }: { subName: string }) {
       observeElement(document.getElementById(id));
     }
   }, [posts])
-
-
 
   const observeElement = (element: HTMLElement | null) => {
     if (!element) return;
@@ -55,15 +46,13 @@ function Posts({ subName }: { subName: string }) {
     );
     // 대상 요소의 관찰을 시작
     observer.observe(element);
-
   }
 
   const deletePost = async (event: MouseEvent<HTMLDivElement>, identifier: string, slug: string) => {
     event.preventDefault();
     try {
-      console.log('삭제버튼 누름')
       await axios.delete("/posts", { data: { identifier, slug } })
-      mutate(posts)
+      mutate()
     } catch (error) {
       console.log(error);
     }
@@ -71,7 +60,6 @@ function Posts({ subName }: { subName: string }) {
 
   return (
     <div>
-
       {isInitalLoading && <p className='text-lg text-center'>로딩중입니다...</p>}
       {posts?.map((post: any) => (
         <PostCard

@@ -4,6 +4,10 @@ import authMiddleware from '../middlewares/auth'
 import Sub from "../entities/Sub";
 import Post from "../entities/Post";
 import Comment from "../entities/Comment";
+import { DataSource, EntityManager } from "typeorm";
+import { AppDataSource } from "../data-source";
+import Vote from "../entities/Vote";
+import { log } from "console";
 
 const getPosts = async(req: Request, res:Response) => {
     const currentPage: number = (req.query.page || 0) as number;
@@ -117,24 +121,47 @@ const createPostComment = async (req:Request, res: Response) => {
     }
 };
 
-const deletePost = async (req: Request, res: Response) => {
-    console.log(req.body);
-    const { identifier, slug, commentIdentifier, value } = req.body;
 
-    try {
-      let post: Post | undefined = await Post.findOneByOrFail({
-        identifier,
-        slug,
-      });
+const deletePost = async (req: Request, res: Response) : Promise<any> => {
+  console.log(req.body);
+  const { identifier, slug, commentIdentifier, value } = req.body;
 
-      if(post) {
-          await post.remove()
-          return res.json("삭제완료");
-      }
-    } catch (error) {
+  const queryRunner = await AppDataSource.createQueryRunner();
 
+  await queryRunner.connect();
+
+  await queryRunner.startTransaction(); // 3
+
+  const post = await queryRunner.manager.findOneOrFail(Post, {
+    where: { identifier, slug },
+  });
+
+  console.log("log post: ", post);
+
+  try {
+    await queryRunner.manager.delete(Vote, {
+      post: post,
+    });
+
+    await queryRunner.manager.delete(Comment, {
+      post: post,
+    });
+
+    await queryRunner.manager.delete(Post, { identifier: identifier, slug: slug });
+
+    await queryRunner.commitTransaction();
+
+    return res.json("삭제완료");
+
+  } catch (error) {
+    await queryRunner.rollbackTransaction();
+    console.log(error);
+    return res
+      .status(404)
+      .json({ error: "삭제 과정에서 문제가 발생하였습니다." });
+  } finally {
+        await queryRunner.release();
     }
-
 };
 
 const router = Router();
