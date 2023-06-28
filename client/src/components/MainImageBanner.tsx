@@ -93,7 +93,7 @@ function MainImageBanner() {
           <div className='absolute z-10 top-[50%] translate-y-[-50%] right-2 bg-gray-500 opacity-50 rounded-full text-white'
             onClick={handleArrowForward}><IoIosArrowForward className='text-4xl' /></div>
           {
-            banners?.map(banner => (
+            banners?.map((banner, idx) => (
               <div className='h-36 bg-gray-500 rounded relative flex-none w-[25%]'
                 style={{
                   backgroundImage: `linear-gradient(rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.9)), url('${banner.img}')`,
@@ -101,7 +101,7 @@ function MainImageBanner() {
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                 }}
-                key={banner}><div className='absolute text-white bottom-0 left-0 right-0 m-2'>
+                key={idx}><div className='absolute text-white bottom-0 left-0 right-0 m-2'>
                   <div className='truncate'>{banner.title}</div>
                   <div className='truncate w-inherit text-xs'>{banner.des}</div>
                 </div>
