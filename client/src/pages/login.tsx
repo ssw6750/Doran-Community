@@ -34,20 +34,13 @@ const Login = () => {
     }
   }
   return (
-    <div className='bg-white'>
+    <div className='bg-basic-yellow text-basic-black-second'>
       <div className='flex flex-col itmes-center justify-center h-screen p-6'>
         <div className='w-10/12 mx-auto md:w-96'>
           <div className='mb-6'>
             <Link href="/">
-              {/* Community */}
-              <a className='flex'>
-                <Image
-                  src="/11.png"
-                  alt="logo"
-                  width={500}
-                  height={130}
-                >
-                </Image>
+              <a className='flex text-basic-red justify-center align-middle text-6xl font-ptBlack'>
+                VALONITY
               </a>
             </Link>
           </div>
