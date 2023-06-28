@@ -29,6 +29,12 @@ const Home: NextPage = () => {
   const address = "/subs/sub/topSubs"
 
   const { data: topSubs } = useSWR<Sub[]>(address, fetcher);
+
+  const [selectedOption, setSelectedOption] = useState('popularity');
+
+  const handleOptionChange = (option:string) => {
+    setSelectedOption(option);
+  };
   
   return (
     <div className="max-w-5xl px-4 pt-2 mx-auto">
@@ -40,23 +46,51 @@ const Home: NextPage = () => {
           {/* 포스트 메뉴 */}
           <div className="flex p-4 items-end w-full h-24 border border-basic-gray-third bg-white mb-2 relative gap-6 text-gray-400">
             <p className='absolute top-4 text-lg text-basic-black-second font-ptBlack'>전체</p>
-
-            <button className='flex justify-center items-center hover:text-basic-red text-sm'>
-              <FaFire className='text-lg' />
-              <p className='ml-2'>인기</p>
-            </button>
-            <button className='flex justify-center items-center hover:text-basic-red text-sm'>
-              <FaSun className='text-lg' />
-              <p className='ml-2'>최신</p>
-            </button>
-            <button className='flex justify-center items-center hover:text-basic-red text-sm'>
-              <FaThumbsUp className='text-lg' />
-              <p className='ml-2'>추천</p>
-            </button>
-            <button className='flex justify-center items-center hover:text-basic-red text-sm'>
-              <FaAngleDoubleUp className='text-lg' />
-              <p className='ml-2'>TOP</p>
-            </button>
+            <label className={`flex justify-center items-center hover:text-basic-red text-sm ${selectedOption === 'latest' ? 'text-basic-red' : ''}`}>
+              <input
+                type="radio"
+                value="latest"
+                className="appearance-none"
+                checked={selectedOption === 'latest'}
+                onChange={() => handleOptionChange('latest')}
+              />
+              <FaSun className="text-lg" />
+              <span className="ml-2">최신</span>
+            </label>
+            <label className={`flex justify-center items-center hover:text-basic-red text-sm ${selectedOption === 'popularity' ? 'text-basic-red' : ''}`}>
+              <input
+                type="radio"
+                value="popularity"
+                className="appearance-none"
+                checked={selectedOption === 'popularity'}
+                onChange={() => handleOptionChange('popularity')}
+              />
+              <FaFire className="text-lg" />
+              <span className="ml-2">인기</span>
+            </label>
+            <label className={`flex justify-center items-center hover:text-basic-red text-sm ${selectedOption === 'recommendation' ? 'text-basic-red' : ''}`}>
+              <input
+                type="radio"
+                value="recommendation"
+                className="appearance-none"
+                checked={selectedOption === 'recommendation'}
+                onChange={() => handleOptionChange('recommendation')}
+              />
+              <FaThumbsUp className="text-lg" />
+              <span className="ml-2">추천</span>
+            </label>
+            <label className={`flex justify-center items-center hover:text-basic-red text-sm ${selectedOption === 'top' ? 'text-basic-red' : ''}`}>
+              <input
+                type="radio"
+                value="top"
+                className="appearance-none"
+                checked={selectedOption === 'top'}
+                onChange={() => handleOptionChange('top')}
+              />
+              <FaAngleDoubleUp className="text-lg" />
+              <span className="ml-2">TOP</span>
+            </label>
+       
             
           </div>
 
@@ -80,7 +114,7 @@ const Home: NextPage = () => {
             </div>
             <p className='absolute bottom-0 right-0 mr-2 mb-1 text-xs '>홈페이지 바로가기</p>   
           </div>
-          <Posts />
+          <Posts order={selectedOption}/>
         </div>
 
         {/* 사이드바 */}

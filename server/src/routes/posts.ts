@@ -13,6 +13,7 @@ const getPosts = async(req: Request, res:Response) => {
     const currentPage: number = (req.query.page || 0) as number;
     const perPage: number = (req.query.count ||  8) as number;
     const subName: any = req.query.subName;
+    const order: any = req.query.order;
 
     try {
         const posts = await Post.find({
@@ -22,6 +23,14 @@ const getPosts = async(req: Request, res:Response) => {
           skip: currentPage * perPage,
           take: perPage,
         });
+
+        // 일단은 인기순으로 통합
+        if (
+          order === "popularity" ||
+          order === "recommendation" ||
+          order === "top"
+        )
+          posts.sort((a, b) => b.voteScore - a.voteScore);
 
         if(res.locals.user) {
             posts.forEach(p=>p.setUserVote(res.locals.user))

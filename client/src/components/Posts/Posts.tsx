@@ -8,11 +8,13 @@ import { useEffect, useState, MouseEvent } from 'react'
 import { useAuthState } from '../../context/auth';
 
 
-function Posts({ subName }: { subName?: any }) {
+function Posts({ subName, order = 'date' }: { subName?: any, order?: any }) {
 
   const getKey = (pageIndex: number, previousPageData: Post[]) => {
+    const url:string = `/posts/?page=${pageIndex}&order=${order}`
+
     if (previousPageData && !previousPageData.length) return null;
-    return subName ? `/posts/?page=${pageIndex}&subName=${subName}` : `/posts/?page=${pageIndex}`
+    return subName ? `${url}&subName=${subName}` : url
   }
 
   const { data, error, size: page, setSize: setPage, isValidating, mutate } = useSWRInfinite<Post[]>(getKey);
