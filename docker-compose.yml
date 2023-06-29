@@ -1,5 +1,44 @@
 version: "3"
 services:
+  frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile.dev
+    container_name: frontend
+    restart: always
+    # ports:
+    #   - "3000:3000"
+    volumes:
+      - /app/node_modules
+      - ./client:/app
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    stdin_open: true
+    # depends_on:
+    #   - backend
+
+  nginx:
+    restart: always
+    build:
+      dockerfile: Dockerfile
+      context: ./nginx
+    ports:
+    - "3000:80"
+
+  backend:
+    build: 
+      context: ./server
+      dockerfile: Dockerfile.dev
+    container_name: backend
+    restart: always
+    # ports:
+    #   - "4000:4000"
+    volumes:
+      - /app/node_modules
+      - ./server:/app
+    # depends_on:
+    #   - db
+
   db:
     image: postgres:latest
     container_name: postgres
@@ -12,28 +51,4 @@ services:
     # 기본 데이터디렉터리 "/var/lib/postgresql/data" 
     volumes:
       - ./data:/var/lib/postgresql/data
-  # server:
-  #   build: ./server
-  #   container_name: server
-  #   restart: always
-  #   ports:
-  #     - "4000:4000"
-  #   volumes:
-  #     - /usr/src/app/node_modules
-  #     - ./server:/usr/src/app
-  #   depends_on:
-  #     - db
-  # client:
-  #   build: ./client
-  #   container_name: client
-  #   restart: always
-  #   ports:
-  #     - "3000:3000"
-  #   volumes:
-  #     - /usr/src/app/node_modules
-  #     - ./client:/usr/src/app
-  #   environment:
-  #     - CHOKIDAR_USEPOLLING=true
-  #   stdin_open: true
-  #   depends_on:
-  #     - server
+
