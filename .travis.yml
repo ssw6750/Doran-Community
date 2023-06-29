@@ -1,0 +1,23 @@
+sudo: required
+
+language: generic
+
+services:
+  - docker
+
+before_install:
+  - docker build -t seoseokwon/valonity -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true seoseokwon/valonity npm run test
+
+after_success:
+  - docker build -t seoseokwon/docker-frontend ./client 
+  - docker build -t seoseokwon/docker-backend  ./server 
+  - docker build -t seoseokwon/docker-nginx    ./nginx 
+
+  - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_ID" --password-stdin
+
+  - docker push -t seoseokwon/docker-frontend  
+  - docker push -t seoseokwon/docker-backend
+  - docker push -t seoseokwon/docker-nginx    
