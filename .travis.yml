@@ -18,6 +18,6 @@ after_success:
 
   - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_ID" --password-stdin
 
-  - docker push -t seoseokwon/docker-frontend  
-  - docker push -t seoseokwon/docker-backend
-  - docker push -t seoseokwon/docker-nginx    
+  - docker push seoseokwon/docker-frontend  
+  - docker push seoseokwon/docker-backend
+  - docker push seoseokwon/docker-nginx    
