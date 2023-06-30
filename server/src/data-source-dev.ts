@@ -3,11 +3,13 @@ import { DataSource } from "typeorm"
 
 export const AppDataSource = new DataSource({
   type: "postgres",
+  // host: "localhost",
+  // host: "db",
+  host: "docker-valonity.cgnoahowkfxn.ap-northeast-1.rds.amazonaws.com",
   port: 5432,
-  host: process.env.POSTGRES_HOST,
-  username: process.env.POSTGRES_USER,
-  password: process.env.POSTGRES_PASSWORD,
-  database: process.env.POSTGRES_DATABASE,
+  username: "postgres",
+  password: "password",
+  database: "postgres",
   synchronize: true,
   logging: false,
   entities: ["src/entities/**/*.ts"],
