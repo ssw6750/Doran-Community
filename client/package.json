@@ -9,7 +9,7 @@
     "start:dev": "env-cmd -f .env.development next start",
     "start:prod": "env-cmd -f .env.production next start",
     "lint": "next lint",
-    "test": "jest --watch",
+    "test": "jest --watchAll",
     "test:ci": "jest --ci"
   },
   "dependencies": {
