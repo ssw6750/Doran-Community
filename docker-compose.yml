@@ -33,7 +33,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
       POSTGRES_DATABASE: postgres
-      POSTGRES_HOST: "${DB_USER_PASSWORD}"
+      POSTGRES_HOST: docker-valonity.cgnoahowkfxn.ap-northeast-1.rds.amazonaws.com
       POSTGRES_PORT: 5432
 
   # db:
