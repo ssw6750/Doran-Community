@@ -21,3 +21,17 @@ after_success:
   - docker push seoseokwon/docker-frontend  
   - docker push seoseokwon/docker-backend
   - docker push seoseokwon/docker-nginx    
+
+
+deploy:
+  provider: elasticbeanstalk
+  region: "ap-northeast-1"
+  app: "test01"
+  env: "Test01-env"
+  bucket_name: elasticbeanstalk-ap-northeast-1-351996596363
+  bucket_path: "test01"
+  on:
+    branch: main
+  
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_ACCESS_KEY
