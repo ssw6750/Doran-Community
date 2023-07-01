@@ -1,43 +1,88 @@
-# version: "2.4"
+version: "3"
+services:
+  frontend:
+    restart: "on-failure"
+    build:
+      context: ./client
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - ./client:/app
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    stdin_open: true
+    # tty: true
+    mem_limit: 256m
+    # ports:
+    #   - "3000:3000"
+
+
+  nginx:
+    restart: always
+    build:
+      dockerfile: Dockerfile
+      context: ./nginx
+    ports:
+    - "3000:80"
+    mem_limit: 128m
+    links:
+      - frontend
+      - backend
+
+  backend:
+    build: 
+      context: ./server
+      dockerfile: Dockerfile.dev
+    container_name: backend
+    restart: always
+    volumes:
+      - /app/node_modules
+      - ./server:/app
+    mem_limit: 128m
+    # environment:
+    #   POSTGRES_USER: postgres
+    #   POSTGRES_PASSWORD: password
+    #   POSTGRES_DATABASE: postgres
+    #   POSTGRES_HOST: "${DB_USER_PASSWORD}"
+    #   POSTGRES_PORT: 5432
+
+
+# # -----------------------------------------
+
+  # db:
+  #   image: postgres:latest
+  #   container_name: postgres
+  #   restart: always
+  #   ports:
+  #     - "5432:5432"
+  #   environment:
+  #     POSTGRES_USER: "${DB_USER_ID}"
+  #     POSTGRES_PASSWORD: "${DB_USER_PASSWORD}"
+  #   # 기본 데이터디렉터리 "/var/lib/postgresql/data" 
+  #   volumes:
+  #     - ./data:/var/lib/postgresql/data
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# version: "3"
 # services:
-#   frontend:
-#     image: seoseokwon/docker-frontend
-#     volumes:
-#       - /app/node_modules
-#       - ./client:/app
-#     environment:
-#       - CHOKIDAR_USEPOLLING=true
-#     stdin_open: true
-#     mem_limit: 128m
-
-
-#   nginx:
-#     restart: always
-#     image: seoseokwon/docker-nginx
-#     ports:
-#     - "3000:80"
-#     mem_limit: 128m
-#     # links:
-#     #   - frontend
-#     #   - backend
-
-#   backend:
-#     build: 
-#       context: ./server
-#       dockerfile: Dockerfile.dev
-#     container_name: backend
-#     restart: always
-#     volumes:
-#       - /app/node_modules
-#       - ./server:/app
-#     mem_limit: 128m
-#     environment:
-#       POSTGRES_USER: postgres
-#       POSTGRES_PASSWORD: password
-#       POSTGRES_DATABASE: postgres
-#       POSTGRES_HOST: db
-#       POSTGRES_PORT: 5432
-
 #   db:
 #     image: postgres:latest
 #     container_name: postgres
@@ -50,58 +95,3 @@
 #     # 기본 데이터디렉터리 "/var/lib/postgresql/data" 
 #     volumes:
 #       - ./data:/var/lib/postgresql/data
-
-
-version: "3"
-services:
-  frontend:
-    build:
-      context: ./client
-      dockerfile: Dockerfile.dev
-    container_name: frontend
-    restart: always
-    # ports:
-    #   - "3000:3000"
-    volumes:
-      - /app/node_modules
-      - ./client:/app
-    environment:
-      - CHOKIDAR_USEPOLLING=true
-    stdin_open: true
-    # depends_on:
-    #   - backend
-
-  nginx:
-    restart: always
-    build:
-      dockerfile: Dockerfile
-      context: ./nginx
-    ports:
-    - "3000:80"
-
-  backend:
-    build: 
-      context: ./server
-      dockerfile: Dockerfile.dev
-    container_name: backend
-    restart: always
-    # ports:
-    #   - "4000:4000"
-    volumes:
-      - /app/node_modules
-      - ./server:/app
-    # depends_on:
-    #   - db
-
-  db:
-    image: postgres:latest
-    container_name: postgres
-    restart: always
-    ports:
-      - "5432:5432"
-    environment:
-      POSTGRES_USER: "${DB_USER_ID}"
-      POSTGRES_PASSWORD: "${DB_USER_PASSWORD}"
-    # 기본 데이터디렉터리 "/var/lib/postgresql/data" 
-    volumes:
-      - ./data:/var/lib/postgresql/data
