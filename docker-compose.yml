@@ -2,7 +2,9 @@ version: "3"
 services:
   frontend:
     restart: "on-failure"
-    image: seoseokwon/docker-frontend  
+    build:
+      context: ./client
+      dockerfile: Dockerfile.dev
     volumes:
       - /app/node_modules
       - ./client:/app
@@ -14,25 +16,28 @@ services:
     # ports:
     #   - "3000:3000"
 
-
   nginx:
     restart: always
-    image: seoseokwon/docker-nginx  
+    build:
+      dockerfile: Dockerfile
+      context: ./nginx
     ports:
     - "80:80"
-    mem_limit: 128m
+    mem_limit: 256m
     links:
       - frontend
       - backend
 
   backend:
-    image: seoseokwon/docker-backend  
+    build: 
+      context: ./server
+      dockerfile: Dockerfile.dev
     container_name: backend
     restart: always
     volumes:
       - /app/node_modules
       - ./server:/app
-    mem_limit: 128m
+    mem_limit: 256m
     # environment:
     #   POSTGRES_USER: postgres
     #   POSTGRES_PASSWORD: password
