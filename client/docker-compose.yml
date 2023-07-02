@@ -1,0 +1,15 @@
+version: '3'
+services:
+  next:
+    container_name: "next"
+    restart: "on-failure"
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      # hot reload를 위해 mount
+      - "./:/app"
+      - "/app/node_modules"
+      - "/app/.next" 
+    ports:
+      - "3000:3000"

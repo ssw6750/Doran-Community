@@ -38,12 +38,12 @@ services:
       - /app/node_modules
       - ./server:/app
     mem_limit: 256m
-    # environment:
-    #   POSTGRES_USER: postgres
-    #   POSTGRES_PASSWORD: password
-    #   POSTGRES_DATABASE: postgres
-    #   POSTGRES_HOST: "${DB_USER_PASSWORD}"
-    #   POSTGRES_PORT: 5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DATABASE: postgres
+      POSTGRES_HOST: docker-valonity.cgnoahowkfxn.ap-northeast-1.rds.amazonaws.com
+      POSTGRES_PORT: 5432
 
 
 # # -----------------------------------------
