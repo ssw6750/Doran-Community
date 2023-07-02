@@ -32,7 +32,7 @@ app.use("/api/posts", postRoutes)
 app.use("/api/votes", voteRoutes)
 app.use("/api/users", userRoutes)
 
-let port = 4000;
+let port = 5000;
 app.listen(port, async () => {
     console.log(`server running at ${process.env.ORIGIN}`)
 
