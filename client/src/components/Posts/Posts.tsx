@@ -63,9 +63,9 @@ function Posts({ subName, order = 'date' }: { subName?: any, order?: any }) {
   return (
     <div>
       {isInitalLoading && <p className='text-lg text-center'>로딩중입니다...</p>}
-      {posts?.map((post: any) => (
+      {posts?.map((post: any, idx) => (
         <PostCard
-          key={post.identifier}
+          key={idx}
           post={post}
           mutate={mutate}
           deletePost={deletePost}
