@@ -7,7 +7,6 @@ import Comment from "../entities/Comment";
 import { DataSource, EntityManager } from "typeorm";
 import { AppDataSource } from "../data-source";
 import Vote from "../entities/Vote";
-import { log } from "console";
 
 const getPosts = async(req: Request, res:Response) => {
     const currentPage: number = (req.query.page || 0) as number;
@@ -132,7 +131,6 @@ const createPostComment = async (req:Request, res: Response) => {
 
 
 const deletePost = async (req: Request, res: Response) : Promise<any> => {
-  console.log(req.body);
   const { identifier, slug, commentIdentifier, value } = req.body;
 
   const queryRunner = await AppDataSource.createQueryRunner();
@@ -144,8 +142,6 @@ const deletePost = async (req: Request, res: Response) : Promise<any> => {
   const post = await queryRunner.manager.findOneOrFail(Post, {
     where: { identifier, slug },
   });
-
-  console.log("log post: ", post);
 
   try {
     await queryRunner.manager.delete(Vote, {
