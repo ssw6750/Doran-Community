@@ -177,7 +177,7 @@ const PostPage = () => {
                     </p>
                   </div>
                   <h1 className='my-1 text-xl font-ptBlack'>{post.title}</h1>
-                  <p className='my-3 text-base'>{post.body}</p>
+                  <pre className='my-3 '>{post.body}</pre>
                   <div className='flex'>
                     <button>
                       <i className='mr-1 fas fa-comment-alt fa-xs'></i>

@@ -52,7 +52,7 @@ const PostCreate = () => {
                         <textarea
                             rows={4}
                             placeholder="설명"
-                            className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                            className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-blue-500 whitespace-pre-wrap"
                             value={body}
                             onChange={(e)=> setBody(e.target.value)}
                         />

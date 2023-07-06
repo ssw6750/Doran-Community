@@ -33,6 +33,13 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
+pre {
+  padding: 0;
+  margin: 0;
+  font-family: 'Pretendard-Regular', "Pretendard-Bold", 'Pretendard-Black','LINESeedKR-Bd', 'Noto Sans KR', sans-serif, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
 a {
   color: inherit;
   text-decoration: none;
