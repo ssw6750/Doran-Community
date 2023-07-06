@@ -31,12 +31,12 @@ services:
       - backend
 
   backend:
-    image: seoseokwon/docker-backend
+    # image: seoseokwon/docker-backend
     container_name: backend
     restart: always
-    # build: 
-    #   context: ./server
-    #   dockerfile: Dockerfile
+    build: 
+      context: ./server
+      dockerfile: Dockerfile
     volumes:
       - /app/node_modules
       - ./server:/app
