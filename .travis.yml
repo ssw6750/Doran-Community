@@ -26,10 +26,10 @@ after_success:
 deploy:
   provider: elasticbeanstalk
   region: "ap-northeast-1"
-  app: "test01"
-  env: "Test01-env"
+  app: "valonity"
+  env: "Valonity-env"
   bucket_name: elasticbeanstalk-ap-northeast-1-351996596363
-  bucket_path: "test01"
+  bucket_path: "valonity"
   on:
     branch: main
   
