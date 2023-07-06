@@ -8,8 +8,10 @@ RUN npm install
 
 COPY ./ ./
 
-CMD [ "npm", "run", "start:prod"]
+# CMD [ "npm", "run", "start:prod"]
 
+# CSR 리액트 설정
+RUN npm run build:prod
 
 FROM nginx
 EXPOSE 3000 
