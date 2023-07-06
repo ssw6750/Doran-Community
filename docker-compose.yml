@@ -5,7 +5,7 @@ services:
     # image: seoseokwon/docker-frontend
     build:
       context: ./client
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     volumes:
       - /app/node_modules
       - ./client:/app
@@ -36,7 +36,7 @@ services:
     restart: always
     build: 
       context: ./server
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     volumes:
       - /app/node_modules
       - ./server:/app
