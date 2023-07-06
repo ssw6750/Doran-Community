@@ -5,9 +5,9 @@
   "main": "index.ts",
   "scripts": {
     "start": "ts-node src/index.ts",
-    "start:dev": "env-cmd -f .env.development nodemon --exec ts-node ./src/server.ts",
-    "start:docker-dev": "env-cmd -f .env.development ts-node ./src/server.ts",
-    "start:prod": "env-cmd -f .env.production ts-node ./src/server.ts",
+    "start:dev": "env-cmd -f ./.env.development nodemon --exec ts-node ./src/server.ts",
+    "start:docker-dev": "env-cmd -f ./.env.development ts-node ./src/server.ts",
+    "start:prod": "env-cmd -f ./.env.production ts-node ./src/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "typeorm": "typeorm-ts-node-commonjs"
   },
