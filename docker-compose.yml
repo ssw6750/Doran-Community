@@ -1,10 +1,8 @@
 version: "3"
 services:
   frontend:
-    restart: "on-failure"
-    build:
-      context: ./client
-      dockerfile: Dockerfile
+    # restart: "on-failure"
+    image: seoseokwon/docker-frontend
     volumes:
       - /app/node_modules
       - ./client:/app
@@ -18,9 +16,7 @@ services:
 
   nginx:
     restart: always
-    build:
-      dockerfile: Dockerfile
-      context: ./nginx
+    image: seoseokwon/docker-nginx  
     ports:
     - "80:80"
     mem_limit: 256m
@@ -29,9 +25,7 @@ services:
       - backend
 
   backend:
-    build: 
-      context: ./server
-      dockerfile: Dockerfile
+    image: seoseokwon/docker-backend
     container_name: backend
     restart: always
     volumes:
