@@ -37,7 +37,7 @@ function Category() {
 
       <div className='w-full text-start pl-4 text-basic-gray-third flex-col pt-2 border-t border-basic-gray-second'>
         <p className='text-sm text-basic-black-second'>홈</p>
-        <Link href="/subs/create">
+        <Link href="/">
           <a className='w-auto m-2 rounded block text-basic-black-second'>
             전체
           </a>
