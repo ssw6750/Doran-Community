@@ -30,7 +30,7 @@ const Home: NextPage = () => {
 
   const { data: topSubs } = useSWR<Sub[]>(address, fetcher);
 
-  const [selectedOption, setSelectedOption] = useState('popularity');
+  const [selectedOption, setSelectedOption] = useState('latest');
 
   const handleOptionChange = (option:string) => {
     setSelectedOption(option);
