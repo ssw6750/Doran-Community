@@ -61,8 +61,12 @@ const UserPage = () => {
 
         </div>
         {/* 유저 정보 */}
-        <div  className='hidden w-4/12 ml-3 md:block'>
-            <div className='flex items-center p-3 bg-gray-400 rounded-t'>
+          <div className='hidden w-4/12 ml-3 md:block text-basic-white'>
+              <div className='p-3 rounded-t bg-basic-black-second flex items-center'
+              style={{
+                background: `linear-gradient(-45deg, #ff4654 50%, #101823 50%)`,
+              }}
+            >
                 <Image
                     src="https://www.gravatar.com/avatar/0000?d=mp&f=y"
                     alt="user profile"
@@ -73,7 +77,7 @@ const UserPage = () => {
                 </Image>
                 <p className='pl-2 text-md'>{data.user.username}</p>
             </div>
-            <div className='p-2 bg-white rounded-b'>
+              <div className='p-2 bg-white rounded-b text-basic-black font-ptBlack'>
                 <p>
                     {dayjs(data.user.createdAt).format("YYYY.MM.DD")} 가입
                 </p>
