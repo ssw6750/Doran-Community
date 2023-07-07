@@ -95,7 +95,13 @@ const SubPage = () => {
                             >
                             </div>
                         ) : (
-                            <div className='h-20 bg-gray-400' onClick={()=> openFileInput("banner")}></div>
+                              <div className='h-20 bg-gray-400' 
+                              style={{
+                                  backgroundImage: `url(${'48XkXSdL44.jpg'})`,
+                                  backgroundRepeat: 'no-repeat',
+                                  backgroundSize: 'cover',
+                                  backgroundPosition: 'center',
+                              }} onClick={()=> openFileInput("banner") }></div>
                         )}
                     </div>
 
@@ -103,7 +109,7 @@ const SubPage = () => {
                     <div className=' bg-basic-white'>
                         <div className='relative flex max-w-5xl px-5 mx-auto'>
                         <div className='absolute' style={{top: -15}}>
-                                {sub.imageUrl && (
+                                {sub.imageUrl ? (
                                     <Image
                                         src={sub.imageUrl}
                                         alt="커뮤니티 이미지"
@@ -112,6 +118,15 @@ const SubPage = () => {
                                         className="rounded-full"
                                         onClick={()=> openFileInput("image")}
                                     />
+                                ) : (
+                                      <Image
+                                          src={'/server/public/images/FyCozFbEo1.jpg'}
+                                          alt="커뮤니티 이미지"
+                                          width={70}
+                                          height={70}
+                                          className="rounded-full"
+                                          onClick={() => openFileInput("image")}
+                                      />
                                 )}
                             </div>
                             <div className='pt-1 pl-24'>

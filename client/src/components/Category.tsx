@@ -46,17 +46,17 @@ function Category() {
 
       <div className='w-full text-start pl-4 text-basic-gray-third flex-col pt-2 border-t border-basic-gray-second'>
         <p className='text-sm text-basic-black-second'>정보</p>
-        <Link href="/subs/create">
+        <Link href="/r/요원">
           <a className='w-auto m-2 rounded block text-basic-black-second'>
             요원
           </a>
         </Link>
-        <Link href="/subs/create">
+        <Link href="/r/팁과 노하우">
           <a className='w-auto m-2 rounded block text-basic-black-second'>
             팁과 노하우
           </a>
         </Link>
-        <Link href="/subs/create">
+        <Link href="/r/유저 뉴스">
           <a className='w-auto m-2 rounded block text-basic-black-second'>
             유저 뉴스
           </a>
@@ -65,32 +65,32 @@ function Category() {
 
       <div className='w-full text-start pl-4 text-basic-gray-third flex-col pt-2 border-t border-basic-gray-second'>
         <p className='text-sm text-basic-black-second'>커뮤니티</p>
-        <Link href="/subs/create">
+        <Link href="/r/자유">
           <a className='w-auto m-2 rounded block text-basic-black-second'>
             자유
           </a>
         </Link>
-        <Link href="/subs/create">
+        <Link href="/r/유머">
           <a className='w-auto m-2 rounded block text-basic-black-second'>
             유머
           </a>
         </Link>
-        <Link href="/subs/create">
+        <Link href="/r/영상">
           <a className='w-auto m-2 rounded block text-basic-black-second'>
             영상
           </a>
         </Link>
-        <Link href="/subs/create">
+        <Link href="/r/유저찾기">
           <a className='w-auto m-2 rounded block text-basic-black-second'>
             유저찾기
           </a>
         </Link>
-        <Link href="/subs/create">
+        <Link href="/r/사건 신고">
           <a className='w-auto m-2 rounded block text-basic-black-second'>
             사건 신고
           </a>
         </Link>
-        <Link href="/subs/create">
+        <Link href="/r/팬아트">
           <a className='w-auto m-2 rounded block text-basic-black-second'>
             팬아트
           </a>
