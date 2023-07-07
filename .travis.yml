@@ -26,13 +26,12 @@ after_success:
 deploy:
   edge: true
   provider: elasticbeanstalk
-  region: ap-northeast-1
-  app: valonity-app
-  env: Valonity-app-env
-  bucket_name: elasticbeanstalk-ap-northeast-1-351996596363
-  bucket_path: valonity-app
+  region: "ap-northeast-1"
+  app: "valonity-app"
+  env: "Valonity-app-env"
+  bucket_name: "elasticbeanstalk-ap-northeast-1-351996596363"
+  bucket_path: "valonity-app"
   on:
     branch: main
-  
   access_key_id: $AWS_ACCESS_KEY
   secret_access_key: $AWS_SECRET_ACCESS_KEY
