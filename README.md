@@ -1,56 +1,42 @@
-## 커뮤니티 도란
+## VALONITY (발로란트 커뮤니티 사이트 - 개인 토이 프로젝트)
 
-
-
-~~[배포 주소](http://ec2-18-182-62-191.ap-northeast-1.compute.amazonaws.com)~~ 현재 AWS EC2에 연결 안되는중...
-
-- ### 커뮤니티 도란은 [인프런 강의](https://www.inflearn.com/course/%EB%94%B0%EB%9D%BC%ED%95%98%EB%8A%94-%EB%A0%88%EB%94%A7)를 보면서 따라한 클론코딩이며, 약간의 반응형 디자인만 추가한 개인 프로젝트입니다.
-- ### Stack
-  - ##### ReactJS
-  - ##### TypeScript
-  - ##### Next.js
-  - ##### Docker
-  - ##### TypeORM
-  - ##### Tailwind CSS
-  - ##### AWS EC2
-  - ##### Node.js
+- ### [배포 주소](http://valonity-app-env.eba-x2zifydm.ap-northeast-1.elasticbeanstalk.com/)
+    <과금때문에 닫힐 수 있음>
+- ### Stack: Next.js , Typescript, Tailwind, Express, TypeOrm, Postgres, RDS, Nginx, Docker, Travis, Elastic beanstalk 
+- ##### 실행 방법
+  1. 해당 레포지토리 클론
+  2. [docker Desktop 다운로드](https://www.docker.com/products/docker-desktop/) docker Desktop 실행
+  3. 루트 터미널에서 <docker-compose -f docker-compose-dev.yml up> 입력
   
  ---
  ### 기능 소개
  
- - #### 로그인/회원가입
- ![test01](https://user-images.githubusercontent.com/73629761/222977993-22edeaa9-aad5-463c-9fb6-0f67eaf5571a.gif)
+  - #### 로그인/회원가입
+  ![발로니티 로그인회원가입](https://github.com/ssw6750/VALONITY/assets/73629761/d615c3d2-74c9-4bf6-a1ea-643a51fefde3)
  
- - #### 커뮤니티 생성
- ![test02](https://user-images.githubusercontent.com/73629761/222978059-5b019ca1-5191-4fc4-b86f-e54f0d5260dd.gif)
+  - #### 커뮤니티 생성
+  ![발로니티 커뮤니티 생성](https://github.com/ssw6750/VALONITY/assets/73629761/4bff487a-41fd-4bda-ae30-90af8cc55c7a)
  
- - #### 포스트 생성
- ![test03](https://user-images.githubusercontent.com/73629761/222978078-47025579-79cc-4899-b6b0-2f2a7ce60775.gif)
+  - #### 포스트 생성
+  ![발로니티 포스트 생성](https://github.com/ssw6750/VALONITY/assets/73629761/4d09a229-740a-4cbc-b7a9-c915aa570513)
 
   - #### 댓글/추천 기능
-  ![test04](https://user-images.githubusercontent.com/73629761/222978095-8b26f907-67a8-4b5f-9e64-0b8f5e45356e.gif)
+  ![발로니티 댓글 생성 및 추천 기능](https://github.com/ssw6750/VALONITY/assets/73629761/448afcaf-726e-456f-bfa0-01dfaa7fea0f)
 
-  - #### 유저 조회
-  ![test05](https://user-images.githubusercontent.com/73629761/222978127-678fcf98-7a91-4a51-81a1-5f7598eca353.gif)
+  - #### 정렬 기능
+  ![발로니티 정렬 기능](https://github.com/ssw6750/VALONITY/assets/73629761/d53a6517-44a9-475f-a718-3375fe94dce7)
+
+  - #### 삭제 기능
+  ![발로니티 삭제 기능](https://github.com/ssw6750/VALONITY/assets/73629761/cf1dab4e-7da9-4de9-9a9f-17c0a8f2278e)
   
   - #### 반응형 디자인 (캐로셀 헤더)
-  ![test06](https://user-images.githubusercontent.com/73629761/222978144-c9f7d9cc-1370-4ca8-97a3-a7576fcf00b2.gif)
+  ![발로니티 모바일](https://github.com/ssw6750/VALONITY/assets/73629761/be9c5d46-dbfe-47ee-ab70-c41b636d8c29)
 
----
-### 소감
-  사실 개인 프로젝트라고 하긴 뭐하고... 개인 공부이다.
-  백엔드와 프론트엔드의 플로우를 직접 경험해보고 싶었고, Next.Js가 어떤건지 알고 싶어서 해당 프로젝트를 진행앴다,
-  '내가 이 프로젝트를 하면서 사용한 기술 스택을 이해했나...?' 라고 하면 전혀 아니다. '그렇다고 전혀 얻은게 없는가?' 라고 하면 그것도 아니다.
-  긴 시간 강의를 듣고 직접 타이핑 하면서 내가 느낀 점은 다음과 같다.
-  - ##### 백엔드와 프론트엔드 모두의 입장에서 api는 필요한 기능을 정확하게 파악해야 한다. (프론트와 백엔드 작업을 동시에 하다보니깐 api 설계가 개발에서 매우 중요한 역할이며, 이를 잘하기 위해서는 커뮤니케이션 능력이 중요하겠다는 생각이 들었다.) 
-  - ##### 백엔드와 프론트엔드의 역할 (express와 typeorm을 다루면서 백엔드의 역할을 이해했다.)
-  - ##### 로직 분리의 중요성 (기능을 잘 분리해서 설계해야 재사용에서도,, 나중에 가독성에도 시간을 매우 단축시킬 수 있다.)
-  - ##### 프로젝트 크기가 크다면 타입스크립트를 사용하자! (무작정 처음 따라해보면서 감이 조금이나마 잡힌 것 같다...)
-  - ##### 테일윈드는 너무 편하다! (~~설치만 간단하다면..!~~)
-  - ##### EC2 어렵지만 못할건 아니다..! (또 하나의 컴퓨터같은 느낌..?)  
-  - ##### 반응형 헤더와 캐로셀은 직접 구현했다. (~~나중에 상세히 기억나는 로직은 이것뿐...~~)
- #
- 아쉬운 점은 다음과 같다.
-  - ##### 아직 Next.JS/SSR이 와닿지 않는다. (하지만 다시 제대로 공부하면 수월하게 이해할 수 있을 것이라고 생각한다.)
-  - ##### 마찬가지로 도커도 그냥 하라는대로 한거지, 이해를 바탕으로 설정한게 아니라서 아쉽다.
-  - ##### '클론 코딩은 결국 내것이 아니다' 라는 것을 절실히 느꼈다. (직접 생각하고 짜봐야 내것으로 만들까말까다..)
+  - #### 외부 링크 연결
+  ![발로니티 외부 링크 연결](https://github.com/ssw6750/VALONITY/assets/73629761/7c01ea62-386d-44d7-b327-0dd2939f5157)
+
+
+
+
+
+
