@@ -6,6 +6,7 @@ import subRoutes from './routes/subs'
 import postRoutes from './routes/posts'
 import voteRoutes from './routes/votes'
 import userRoutes from './routes/users'
+import fileRoutes from './routes/file'
 import cors from 'cors';
 import dotenv from 'dotenv'
 import cookieParser from "cookie-parser";
@@ -31,11 +32,12 @@ app.use("/api/subs", subRoutes)
 app.use("/api/posts", postRoutes)
 app.use("/api/votes", voteRoutes)
 app.use("/api/users", userRoutes)
+app.use("/api/file", fileRoutes)
 
 let port = 5000;
 app.listen(port, async () => {
     console.log(`server running at ${process.env.ORIGIN}`)
-
+    
     AppDataSource.initialize().then(async () => {
     console.log("databse initialized")
     }).catch(error => console.log(error))

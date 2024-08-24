@@ -1,6 +1,8 @@
 import { Request, response, Response, Router } from "express";
 import userMiddleware from '../middlewares/user'
 import authMiddleware from '../middlewares/auth'
+import uploadMiddleware from "../middlewares/upload";
+import { uploadFile } from "../controllers/fileController";
 import Sub from "../entities/Sub";
 import Post from "../entities/Post";
 import Comment from "../entities/Comment";
@@ -173,7 +175,6 @@ const router = Router();
 router.get("/:identifier/:slug", userMiddleware, getPost)
 router.post("/", userMiddleware, authMiddleware, createPost);
 router.get("/", userMiddleware, getPosts)
-
 router.get("/:identifier/:slug/comments", userMiddleware, getPostComment)
 router.post("/:identifier/:slug/comments",  userMiddleware, createPostComment)
 

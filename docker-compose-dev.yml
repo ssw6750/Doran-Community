@@ -11,10 +11,10 @@ services:
     environment:
       - CHOKIDAR_USEPOLLING=true
     stdin_open: true
-    # tty: true
+    tty: true
     mem_limit: 256m
-    # ports:
-    #   - "3000:3000"
+    ports:
+      - "3000:3000"
 
   nginx:
     restart: always
@@ -40,8 +40,21 @@ services:
     mem_limit: 256m
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
+      POSTGRES_PASSWORD: 1234
       POSTGRES_DATABASE: postgres
-      POSTGRES_HOST: docker-valonity.cgnoahowkfxn.ap-northeast-1.rds.amazonaws.com
+      POSTGRES_HOST: localhost
       POSTGRES_PORT: 5432
+
+  # db:
+  #   image: postgres:latest
+  #   container_name: postgres
+  #   restart: always
+  #   ports:
+  #     - "5432:5432"
+  #   environment:
+  #     POSTGRES_USER: "${DB_USER_ID}"
+  #     POSTGRES_PASSWORD: "1234"
+  #   # 기본 데이터디렉터리 "/var/lib/postgresql/data" 
+  #   volumes:
+  #     - ./data:/var/lib/postgresql/data
 

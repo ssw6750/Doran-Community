@@ -1,86 +1,54 @@
 import axios from 'axios';
 import { GetServerSideProps } from 'next';
-import { useRouter } from 'next/router';
-import React, { FormEvent, useState } from 'react'
-import { Post } from '../../../types';
+import Editor from '../../../components/Editor'
+import React, {FormEvent, useState} from 'react';
+import {Post} from "../../../types";
+import {useRouter} from "next/router";
 
 const PostCreate = () => {
-    const [title, setTitle] = useState("");
-    const [body, setBody] = useState("");
     const router = useRouter();
-    const {sub: subName} = router.query;
+    const { sub: subName } = router.query;
 
-    const submitPost = async (e: FormEvent) => {
+    const submitPost = async ({e,title, body} : {e: FormEvent<HTMLFormElement>, title:string, body:string}) => {
         e.preventDefault();
-        if(title.trim() === "" || !subName) return;
-        
+        if (title.trim() === '' || !subName) return;
         try {
-            const { data: post} = await axios.post<Post>("/posts", {
+            const { data: post } = await axios.post<Post>('/posts', {
                 title: title.trim(),
                 body,
-                sub: subName
-            })
-            // console.log(r/${subName}/${post.identifier}/${post.slug}`);
-            
+                sub: subName,
+            });
+
             router.push(`/r/${subName}/${post.identifier}/${post.slug}`);
-            // router.push(`${post.identifier}/${post.slug}`);
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
-    }
-  return (
-    <div className='flex flex-col justify-center pt-16'>
-        <div className='w-10/12 mx-auto md:w-96'>
-            <div className='p-4 bg-white rounded'>
-                <h1 className='mb-3 text-lg'>포스트 생성하기</h1>
-                <form onSubmit={submitPost}>
-                    <div className='relative mb-2'>
-                        <input
-                            type="text"
-                            className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                            placeholder="제목"
-                            maxLength={20}
-                            value={title}
-                            onChange={(e)=> setTitle(e.target.value)}
-                        />
-                        <div
-                            style={{top:10, right:10}}
-                            className="absolute mb-2 text-sm text-gray-400 select-none"
-                        >
-                            {title.trim().length}/20
-                        </div>
-                        <textarea
-                            rows={4}
-                            placeholder="설명"
-                            className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-blue-500 whitespace-pre-wrap"
-                            value={body}
-                            onChange={(e)=> setBody(e.target.value)}
-                        />
-                        <div className='flex justify-end'>
-                            <button
-                                className='px-4 py-1 text-sm font-semibold text-white bg-gray-400 border rounded'
-                            >
-                                생성하기
-                            </button>
-                        </div>
-                    </div>
-                </form>
+    };
+
+    return (
+        <div className='flex flex-col justify-center pt-16'>
+            <div className='w-10/12 mx-auto'>
+                <div className='p-4 bg-white rounded'>
+                    <h1 className='mb-3 text-lg'>포스트 생성하기</h1>
+                    <Editor submitPost={submitPost}></Editor>
+                </div>
             </div>
         </div>
-    </div>
-  )
-}
+    );
+};
 
-export default PostCreate
+export default PostCreate;
 
-export const getServerSideProps: GetServerSideProps = async ({req, res}) => {
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     try {
         const cookie = req.headers.cookie;
-        if(!cookie) throw new Error("쿠키가 없습니다.")
-        await axios.get(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/auth/me`, {headers:{cookie}});
-        return {props:{}}
+        if (!cookie) throw new Error('쿠키가 없습니다.');
+        await axios.get(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/auth/me`, {
+            headers: { cookie },
+        });
+        return { props: {} };
     } catch (error) {
-        res.writeHead(307, {Location: "/login"}).end()
-        return{props: {}}
+        res.writeHead(307, { Location: '/login' }).end();
+        return { props: {} };
     }
-}
+};

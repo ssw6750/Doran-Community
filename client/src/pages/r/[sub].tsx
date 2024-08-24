@@ -47,7 +47,7 @@ const SubPage = () => {
             )
         } catch (error) {
             console.log(error);
-            
+
         }
     }
 
@@ -120,7 +120,7 @@ const SubPage = () => {
                                     />
                                 ) : (
                                       <Image
-                                          src={'/server/public/images/FyCozFbEo1.jpg'}
+                                          src={''}
                                           alt="커뮤니티 이미지"
                                           width={70}
                                           height={70}

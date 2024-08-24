@@ -7,6 +7,8 @@ import dayjs from 'dayjs'
 import { useAuthState } from '../context/auth'
 import Router, { useRouter } from 'next/router'
 import axios from 'axios'
+import { useEditor, EditorContent } from '@tiptap/react';
+import extenstions from '../util/tiptap/extensions'
 
 interface PostCardProps {
     post: Post
@@ -59,6 +61,19 @@ const PostCard = ({
         setOwnPost(authenticated && user.username === username)
 
     }, [sub])
+
+    const editor = useEditor({
+        extensions: extenstions,
+        content: '',
+        editable: false,
+    });
+    
+  
+    useEffect(() => {
+        if (body) {
+            editor?.commands.setContent(body);
+        }
+    }, [editor, body]);
 
 
   return (
@@ -129,7 +144,7 @@ const PostCard = ({
             <Link href={url}>
                   <a className='my-1 text-base font-ptBlack'>{title}</a>
             </Link>
-            {body &&  <p className="text-sm">{body}</p>}
+            {body && <EditorContent editor={editor} />}
             <div className='flex'>
                 <Link href={url}>
                     <a>

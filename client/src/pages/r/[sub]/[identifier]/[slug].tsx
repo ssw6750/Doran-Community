@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Link from 'next/link';
 import { useRouter } from 'next/router'
-import React, { FormEvent, useState } from 'react'
+import React, { FormEvent, useEffect, useState } from 'react'
 import useSWR, { mutate } from 'swr';
 import { Comment, Post } from '../../../../types';
 import dayjs from 'dayjs'
@@ -12,6 +12,8 @@ import SideBar from '../../../../components/SideBar';
 import Posts from '../../../../components/Posts/Posts';
 import Image from 'next/image';
 import Category from '../../../../components/Category';
+import { useEditor, EditorContent } from '@tiptap/react';
+import extensions from '../../../../util/tiptap/extensions'
 
 const PostPage = () => {
     const router = useRouter();
@@ -81,6 +83,24 @@ const PostPage = () => {
     // ))
     renderPosts = <Posts subName={subName} />
   }
+
+  const [editorContent, setEditorContent] = useState('ㅁㅇㅁㅇㅁㅇ');
+
+  const editor = useEditor({
+      extensions: extensions,
+      content: editorContent,
+      editable: false,
+  });
+  
+
+  useEffect(() => {
+    console.log('post?.body >>> ', post?.body)
+      if (post?.body) {
+        console.log('바꿈')
+          setEditorContent(post.body);
+          editor?.commands.setContent(post.body);
+      }
+  }, [editor, post?.body]);
 
   if (sub)
   return (
@@ -177,7 +197,9 @@ const PostPage = () => {
                     </p>
                   </div>
                   <h1 className='my-1 text-xl font-ptBlack'>{post.title}</h1>
-                  <pre className='my-3 '>{post.body}</pre>
+                  {/* <pre dangerouslySetInnerHTML={{ __html: post.body }} className='my-3 '>{post.body}</pre> */}
+                  {/* <ReactMarkdown>{post.body}</ReactMarkdown> */}
+                  <EditorContent editor={editor} />
                   <div className='flex'>
                     <button>
                       <i className='mr-1 fas fa-comment-alt fa-xs'></i>

@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response, Router } from "express";
 import userMiddleware from '../middlewares/user'
 import authMiddleware from '../middlewares/auth'
+import uploadMiddleware from '../middlewares/upload'
 import { isEmpty } from "class-validator";
 import { AppDataSource } from "../data-source";
 import Sub from "../entities/Sub";
@@ -10,6 +11,7 @@ import multer, {FileFilterCallback} from "multer";
 import { makeId } from "../utils/helpers";
 import path from "path";
 import { unlinkSync } from "fs";
+import {uploadFile} from "../controllers/fileController";
 
 const getSub = async (req: Request, res: Response) => {
     const name = req.params.name;
@@ -112,29 +114,32 @@ const ownSub = async (req: Request, res: Response, next: NextFunction) => {
     }
 }
 
-const upload = multer({
-    storage: multer.diskStorage({
-        destination:"public/images",
-        filename: (_, file, callback) => {
-            const name = makeId(10);
-            callback(null, name + path.extname(file.originalname))
-        }
-    }),
-    fileFilter: (_, file:any, callback: FileFilterCallback) => {
-        if (
-          file.mimetype === "image/jpeg" ||
-          file.mimetype === "image/png" ||
-          file.mimetype === "image/webp"
-        ) {
-          callback(null, true);
-        } else {
-          callback(new Error("이미지가 아닙니다."));
-        }
-    }
-})
+// const upload = multer({
+//     storage: multer.diskStorage({
+//         destination:"public/images",
+//         filename: (_, file, callback) => {
+//             const name = makeId(10);
+//             callback(null, name + path.extname(file.originalname))
+//         }
+//     }),
+//     fileFilter: (_, file:any, callback: FileFilterCallback) => {
+//         if (
+//           file.mimetype === "image/jpeg" ||
+//           file.mimetype === "image/png" ||
+//           file.mimetype === "image/webp"
+//         ) {
+//           callback(null, true);
+//         } else {
+//           callback(new Error("이미지가 아닙니다."));
+//         }
+//     }
+// })
 
 const uploadSubImage = async (req: Request, res: Response) => {
     const sub: Sub = res.locals.sub;
+    // console.log('req.body.savedFileName >>> ', req.body.savedFileName)
+    // console.log('req.file?.filename >>> ', req.file?.filename)
+    // console.log('req.file?.name >>>', req.file?.name)
     try {
         const type = req.body.type;
         if (type !== "image" && type !=="banner") {
@@ -145,31 +150,31 @@ const uploadSubImage = async (req: Request, res: Response) => {
             unlinkSync(req.file.path);
             return res.status(400).json({error: "잘못된 유형"});
         }
-        let oldImageUrn: string = "";
+        // let oldImageUrn: string = "";
 
         if(type === "image") {
-            oldImageUrn = sub.imageUrn || "";
-            sub.imageUrn = req.file?.filename || "";
+            // oldImageUrn = sub.imageUrn || "";
+            sub.imageUrn = req.body.savedFileName || "";
         } else if (type === "banner") {
-            oldImageUrn = sub.bannerUrn || "";
-            sub.bannerUrn = req.file?.filename || "";
+            // oldImageUrn = sub.bannerUrn || "";
+            sub.bannerUrn = req.body.savedFileName || "";
         }
         await sub.save();
 
-        if (oldImageUrn !== "") {
-            const fullFilename = path.resolve(
-                process.cwd(),
-                "public",
-                "images",
-                oldImageUrn
-            );
-            unlinkSync(fullFilename)
-        }
-        
+        // if (oldImageUrn !== "") {
+        //     const fullFilename = path.resolve(
+        //         process.cwd(),
+        //         "public",
+        //         "images",
+        //         oldImageUrn
+        //     );
+        //     unlinkSync(fullFilename)
+        // }
+
     } catch (error) {
         console.log(error);
         return res.status(500).json("문제가 발생했습니다.")
-        
+
     }
     
 }
@@ -179,6 +184,6 @@ const router = Router();
 router.get("/:name", userMiddleware, getSub);
 router.post("/", userMiddleware, authMiddleware, createSub);
 router.get("/sub/topSubs", topSubs);
-router.post("/:name/upload", userMiddleware, authMiddleware, ownSub, upload.single("file"), uploadSubImage)
+router.post("/:name/upload", userMiddleware, authMiddleware, ownSub, uploadMiddleware.single("file"), uploadFile, uploadSubImage)
 
 export default router

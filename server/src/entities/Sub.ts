@@ -34,13 +34,13 @@ export default class Sub extends BaseEntity {
 
     @Expose()
     get imageUrl(): string {
-        return this.imageUrn ? `${process.env.APP_URL}/images/${this.imageUrn}` :
+        return this.imageUrn ? `${process.env.APP_URL}/api/file/${this.imageUrn}` :
         "https://www.gravatar.com/avatar?d=mp&f=y"
     }
 
     @Expose()
     get bannerUrl(): string | undefined {
-        return this.bannerUrn ? `${process.env.APP_URL}/images/${this.bannerUrn}` : 
+        return this.bannerUrn ? `${process.env.APP_URL}/api/file/${this.bannerUrn}` :
             undefined;
     }
 
